@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const Schema=mongoose.Schema;
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
     username: {
       type: String,
@@ -18,14 +19,14 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required:true
     },
-    followings: {
-      type: Array,
-      default: [],
-    },
-    followers: {
-      type: Array,
-      default: [],
-    },
+    followings: [{
+      type:Schema.Types.ObjectId,
+      ref:"User",
+    }],
+    followers:[ {
+      type: Schema.Types.ObjectId,
+      default:"User",
+    }],
   },
   { timestamps: true }
 ); //giving an information about when its updated or created

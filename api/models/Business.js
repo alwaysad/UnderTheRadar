@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
+const Schema=mongoose.Schema;
 
-
-const BusinessSchema=new mongoose.Schema({
+const BusinessSchema=new Schema({
     name:{
         type:String,
         required:true
@@ -9,6 +9,10 @@ const BusinessSchema=new mongoose.Schema({
     email:{
         type:String,
         required:true
+    },
+    owner:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
     },
     password:{
         type:String,
@@ -22,11 +26,6 @@ const BusinessSchema=new mongoose.Schema({
        type:String,
        required:true
     },
-    comments:{
-        type:Array,
-        default:[]
-    },
-    
     images:{
         type:Array,
         default:[]
@@ -35,16 +34,10 @@ const BusinessSchema=new mongoose.Schema({
         type:Number,
         enum:[1,2,3]
     },
-    followers:{
-        type:Array,
-        default:[]
-    },
-    followings:{
-        type:Array,
-        default:[]
-    }
-
-    
+    comments:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Comment"
+    }]
 })
 
 module.exports=mongoose.model('Business',BusinessSchema);
