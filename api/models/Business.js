@@ -37,7 +37,11 @@ const BusinessSchema=new Schema({
     comments:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Comment"
-    }]
+    }],
+    rating:{
+        type:Number,
+        default:null
+    }
 })
 
 module.exports=mongoose.model('Business',BusinessSchema);

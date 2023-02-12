@@ -50,10 +50,6 @@ router.put("/unfollow/:id", async (req, res) => {
     res.status(500).json(error);
   }
 });
-//making a comment
-router.post("/comment/:id", async (req, res) => {
-  try {
-  } catch (error) {}
-});
+
 
 module.exports = router;

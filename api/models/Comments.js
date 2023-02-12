@@ -16,6 +16,18 @@ const CommentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Business",
     },
+    like:{
+        type:Number,
+        default:0,
+    },
+    dislike:{
+        type:Number,
+        default:0
+    },
+    rating:{
+        type:Number,
+        default:null
+    }
   },
   { timestamps: true }
 );
