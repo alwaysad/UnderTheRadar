@@ -5,33 +5,36 @@ const Business = require("../models/Business");
 const User = require("../models/User");
 
 //get all comments
-router.get('/getcomments',async(req,res)=>{
+router.get("/getcomments", async (req, res) => {
   try {
-    const comments=await Comment.find();
+    const comments = await Comment.find();
     res.status(200).json(comments);
   } catch (error) {
-   res.status(500).json(error);
+    res.status(500).json(error);
   }
-})
+});
 
 //make comment
 router.post("/makecomment", async (req, res) => {
   try {
     const business = await Business.findById(req.body.businessId);
     const user = await User.findById(req.body.userId);
-    const comments=business.comments.length;
+    const comments = business.comments.length;
     const newComment = new Comment({
       text: req.body.text,
       user: req.body.userId,
       business: req.body.businessId,
-      rating:req.body.rating
+      rating: req.body.rating,
     });
-    //addıng comment also adds comment to busıness and user
+    //addıng comment also adds comment to busıness and user and updating the business new rating
     const comment = await newComment.save();
-    const newRating=(req.body.rating+business.rating)/comments;
-    await business.updateOne({ $push: { comments: comment._id }, $set: {rating: newRating}});
+    const rating = parseFloat(req.body.rating);
+    const newRating = (rating + business.rating*comments) / (comments+1);
+    await business.updateOne({
+      $push: { comments: comment._id },
+      $set: { rating: newRating },
+    });
 
-   
     await user.updateOne({ $push: { comments: comment._id } });
     res.status(200).json(comment);
   } catch (error) {
@@ -61,34 +64,34 @@ router.put("/edit/:id", async (req, res) => {
   try {
     const comment = await Comment.findByIdAndUpdate(req.params.id, {
       text: req.body.text,
-      rating:req.body.rating
+      rating: req.body.rating,
     });
-    res.status(200).json('updated succesfully');
+    res.status(200).json("updated succesfully");
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
 //like comment
-router.put('/like/:id',async(req,res)=>{
+router.put("/like/:id", async (req, res) => {
   try {
-    const comment=await Comment.findById(req.params.id);
-    await comment.updateOne({$inc:{like:1}});
+    const comment = await Comment.findById(req.params.id);
+    await comment.updateOne({ $inc: { like: 1 } });
     res.status(200).json(comment);
   } catch (error) {
     res.status(500).json(error);
   }
+});
 
-})
-router.put('/dislike/:id',async(req,res)=>{
+//dislike comment
+router.put("/dislike/:id", async (req, res) => {
   try {
-    const comment=await Comment.findById(req.params.id);
-    await comment.updateOne({$inc:{like:-1}});
+    const comment = await Comment.findById(req.params.id);
+    await comment.updateOne({ $inc: { like: -1 } });
     res.status(200).json(comment);
   } catch (error) {
     res.status(500).json(error);
   }
-
-})
+});
 
 module.exports = router;
