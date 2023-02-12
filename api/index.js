@@ -7,6 +7,7 @@ const app = express();
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const commentRoutes=require('./routes/commentRoutes');
 
 dotenv.config();
 
@@ -29,3 +30,4 @@ app.use(morgan("common"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use('/api/comment',commentRoutes);

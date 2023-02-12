@@ -25,8 +25,12 @@ const UserSchema = new Schema(
     }],
     followers:[ {
       type: Schema.Types.ObjectId,
-      default:"User",
+      ref:"User",
     }],
+    comments:[{
+      type:Schema.Types.ObjectId,
+      ref:'Comments'
+    }]
   },
   { timestamps: true }
 ); //giving an information about when its updated or created
