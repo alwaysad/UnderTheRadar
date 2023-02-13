@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema=mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
@@ -7,9 +7,9 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
-    email:{
-      type:String,
-      required:true
+    email: {
+      type: String,
+      required: true,
     },
     password: {
       type: String,
@@ -17,20 +17,32 @@ const UserSchema = new Schema(
     },
     birthDate: {
       type: String,
-      required:true
+      required: true,
     },
-    followings: [{
-      type:Schema.Types.ObjectId,
-      ref:"User",
-    }],
-    followers:[ {
-      type: Schema.Types.ObjectId,
-      ref:"User",
-    }],
-    comments:[{
-      type:Schema.Types.ObjectId,
-      ref:'Comments'
-    }]
+    followings: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    followers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    likedComments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comments",
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comments",
+      },
+    ],
   },
   { timestamps: true }
 ); //giving an information about when its updated or created
