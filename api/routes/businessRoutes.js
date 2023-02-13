@@ -2,7 +2,7 @@ const Business = require("../models/Business");
 
 const router = require("express").Router();
 
-//edit business
+//get business
 router.get("/getBusiness/:id", async (req, res) => {
   try {
     const business = await Business.findById(req.params.id);
