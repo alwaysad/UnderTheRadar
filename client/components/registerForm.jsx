@@ -28,18 +28,7 @@ const RegisterForm = (props) => {
       birthDate: enteredBirthDate,
       email: enteredMail,
     };
-    try {
-      const response = await fetch("http://localhost:8800/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-      console.log(user);
-      const data = await response.json();
-    } catch (error) {
-      console.log(error);
-      console.log(user);
-    }
+   props.onSubmitHandler(user);
   };
 
   const confirmPasswordHandler = () => {
