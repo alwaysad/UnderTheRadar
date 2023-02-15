@@ -40,7 +40,8 @@ router.post("/login/:type", async (req, res) => {
     if (req.params.type === "user") {
       const user = await User.findOne({ email: req.body.email });
       if (req.body.password === user.password) {
-        res.status(200).json("Personal login welcome");
+        console.log('server denetim yaptı')
+        res.status(200).json({message:'Personal login welcome'});
       } else {
         res.status(500).json("Password is wrong");
       }
