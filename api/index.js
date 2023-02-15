@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const cors=require('cors');
 const app = express();
 
 const authRoutes = require("./routes/authRoutes");
@@ -25,9 +26,12 @@ mongoose.connect(
 );
 
 //middlewares
-app.use(express.json());
+
 app.use(helmet());
 app.use(morgan("common"));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
