@@ -2,7 +2,7 @@
 const HomePage=()=>{
 
     return <div>
-        <p>Welcome to home page</p>
+        <p className="font-bold">Welcome to home page</p>
     </div> 
 }
 

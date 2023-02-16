@@ -43,12 +43,16 @@ const Login = () => {
       >
         User login
       </button>
-      <button onClick={()=>{
-        setIsUser(false);
-        setIsBusiness(true);
-      }}>Business login</button>
-     {isUser&&<LoginUser submitHandler={loginHandler} />}
-     {isBusiness&&<BusinessLogin submitHandler={businessLoginHandler}/>}
+      <button
+        onClick={() => {
+          setIsUser(false);
+          setIsBusiness(true);
+        }}
+      >
+        Business login
+      </button>
+      {isUser && <LoginUser submitHandler={loginHandler} />}
+      {isBusiness && <BusinessLogin submitHandler={businessLoginHandler} />}
     </div>
   );
 };
