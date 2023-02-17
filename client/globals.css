@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .btn-primary{
+        @apply px-20 mx-10 py-6 bg-secondary md:px-40 md:py-6 rounded-full max-w-xl text-white font-bold text-3xl;
+    }
+}

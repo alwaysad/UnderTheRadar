@@ -6,6 +6,7 @@ import RegisterBusinessForm from "../../components/registerBusiness";
 const Register = () => {
   const [isPersonal, setIsPersonal] = useState(false);
   const [isBusiness, setIsBusiness] = useState(false);
+  const [showButtons, setshowButtons] = useState(true);
 
   const onSubmitHandler = async (newUser) => {
     const user = {
@@ -29,8 +30,8 @@ const Register = () => {
       name: newBusiness.name,
       email: newBusiness.email,
       password: newBusiness.password,
-      description:newBusiness.description,
-      location:newBusiness.location
+      description: newBusiness.description,
+      location: newBusiness.location,
     };
     try {
       await axios
@@ -44,26 +45,37 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          setIsPersonal(true);
-          setIsBusiness(false);
-        }}
-      >
-        Personal Register
-      </button>
-      <button
-        onClick={() => {
-          setIsPersonal(false);
-          setIsBusiness(true);
-        }}
-      >
-        Business Register
-      </button>
+    <div className="flex flex-col space-y-10 bg-primary min-h-screen justify-center items-center">
+      <p className="text-white text-5xl font-bold">Journey</p>
+      {showButtons && (
+        <div className="flex flex-col space-y-10">
+          <button
+            className="btn-primary"
+            onClick={() => {
+              setIsPersonal(true);
+              setIsBusiness(false);
+              setshowButtons(false);
+            }}
+          >
+            Personal Register
+          </button>
+          <button
+            className="btn-primary"
+            onClick={() => {
+              setIsPersonal(false);
+              setIsBusiness(true);
+              setshowButtons(false);
+            }}
+          >
+            Business Register
+          </button>
+        </div>
+      )}
 
-      {isPersonal&&<RegisterForm onSubmitHandler={onSubmitHandler} />}
-      {isBusiness&&<RegisterBusinessForm onSubmitHandler={businessSubmitHandler} />}
+      {isPersonal && <RegisterForm onSubmitHandler={onSubmitHandler} />}
+      {isBusiness && (
+        <RegisterBusinessForm onSubmitHandler={businessSubmitHandler} />
+      )}
     </div>
   );
 };
