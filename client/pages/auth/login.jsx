@@ -8,6 +8,7 @@ const Login = () => {
   const router = useRouter();
   const [isUser, setIsUser] = useState(false);
   const [isBusiness, setIsBusiness] = useState(false);
+  const [showButtons,setshowButtons]=useState(true);
   const loginHandler = async (loginCredentials) => {
     try {
       await axios
@@ -34,23 +35,26 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <button
+    <div className="flex flex-col space-y-4 items-center justify-center min-h-screen bg-gray-400 ">
+      {showButtons&&<> <button className="btn-primary"
         onClick={() => {
           setIsUser(true);
           setIsBusiness(false);
+          setshowButtons(false);
         }}
       >
         User login
       </button>
-      <button
+      <button className="btn-primary"
         onClick={() => {
           setIsUser(false);
           setIsBusiness(true);
+          setshowButtons(false);
         }}
       >
         Business login
-      </button>
+      </button></>}
+     
       {isUser && <LoginUser submitHandler={loginHandler} />}
       {isBusiness && <BusinessLogin submitHandler={businessLoginHandler} />}
     </div>

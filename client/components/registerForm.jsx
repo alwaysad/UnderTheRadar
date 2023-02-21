@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import useInputValidate from "./customhooks/useinputValidate";
 
+
 const RegisterForm = (props) => {
   const [error, setError] = useState("");
   const [color,setColor]=useState('text-red-500');

@@ -25,10 +25,11 @@ const passwordRef=useRef();
   }
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
-        <label htmlFor="email">Email</label>
-        <input
+    <div className="flex items-center justify-center bg-white px-10 py-10 rounded-lg">
+      <form onSubmit={submitHandler} className='flex flex-col space-y-4'>
+        <div className="flex flex-col space-y-2 md:flex-row md:space-x-8 md:space-y-0 items-center">
+        <label htmlFor="email" className="font-medium text-xl w-7/12">Email</label>
+        <input className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
           type="email"
           placeholder="Lütfen email giriniz"
           onChange={email.handleChange}
@@ -36,13 +37,17 @@ const passwordRef=useRef();
           pattern="^[^s@]+@[^s@]+.[^s@]+$"
           ref={emailRef}
         ></input>
-        <label htmlFor="password">password</label>
-        <input
+        </div>
+        {email.error&&<p>{email.error}</p>}
+        <div className="flex flex-col space-y-2 md:flex-row md:space-x-8 md:space-y-0 items-center">
+        <label htmlFor="password" className="font-medium text-xl w-7/12">Password</label>
+        <input className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
           type="password"
           placeholder="Lütfen şifre giriniz"
           ref={passwordRef}
         ></input>
-        <button type="submit">Login</button>
+        </div>
+        <button type="submit" className="border text-xl border-black hover:bg-black hover:text-white transition duration-200 rounded-xl py-2">Personal Login </button>
       </form>
     </div>
   );

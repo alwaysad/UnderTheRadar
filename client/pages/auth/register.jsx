@@ -4,6 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import RegisterBusinessForm from "../../components/registerBusiness";
 
+import HikingIcon from '@mui/icons-material/Hiking';
+import BusinessIcon from '@mui/icons-material/Business';
+
+
+
+
 const Register = () => {
   const router = useRouter();
   const [isPersonal, setIsPersonal] = useState(false);
@@ -63,8 +69,11 @@ const Register = () => {
               setIsBusiness(false);
               setshowButtons(false);
             }}
-          >
-            Personal Register
+          > 
+            <div className="flex items-center space-x-10">
+          <p>Personal Register </p>  
+            <HikingIcon fontSize="large"/>
+            </div>
           </button>
           <button
             className="btn-primary"
@@ -74,7 +83,10 @@ const Register = () => {
               setshowButtons(false);
             }}
           >
-            Business Register
+               <div className="flex items-center space-x-10">
+          <p>Business Register </p>  
+            <BusinessIcon fontSize="large"/>
+            </div>
           </button>
         </div>
       )}
