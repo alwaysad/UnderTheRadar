@@ -35,8 +35,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4 items-center justify-center min-h-screen bg-gray-400 ">
-      {showButtons&&<> <button className="btn-primary"
+    <div className="flex flex-col space-y-6 items-center justify-center min-h-screen bg-gray-400 ">
+      {showButtons&&<> <button className="btn-primary w-4/12"
         onClick={() => {
           setIsUser(true);
           setIsBusiness(false);
@@ -45,7 +45,7 @@ const Login = () => {
       >
         User login
       </button>
-      <button className="btn-primary"
+      <button className="btn-primary w-4/12"
         onClick={() => {
           setIsUser(false);
           setIsBusiness(true);

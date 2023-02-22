@@ -45,7 +45,8 @@ router.post("/makecomment", async (req, res) => {
 //delete comment delete from all places(user and business)
 router.delete("/delete/:id", async (req, res) => {
   try {
-    const comment = await Comment.findById(req.params.id); //finding comment and after finding business and user with that
+    const comment = await Comment.findById(req.params.id);
+    
     const business = comment.business;
     const user = await User.findById(comment.user);
     const comments = user.comments; //inside of the user comments we are checking if request parameter include or not if doesnt exist we cant delete
@@ -92,10 +93,10 @@ router.put("/edit/:id", async (req, res) => {
         });
         res.status(200).json("updated succesfully");
       } else {
-        res.status(404).json('Comment doesnt exist');
+        res.status(404).json("Comment doesnt exist");
       }
     } else {
-      res.status(404).json({ message: "You can edit only your account"});
+      res.status(404).json({ message: "You can edit only your account" });
     }
   } catch (error) {
     res.status(500).json(error);
