@@ -1,0 +1,60 @@
+const User = require("../models/User");
+
+const followUser = async (req, res) => {
+  try {
+    const followedUser = await User.findById(req.params.id);
+    const currentUser = await User.findById(req.userId);
+    if (req.userId === req.params.id) {
+      return res.status(404).json({ message: "You can not follow yourself" });
+    }
+    console.log(req.userId);
+    const followers = followedUser.followers;
+
+    const result = Array.isArray(followers)
+      ? !followers.includes(req.body.id)
+      : false;
+
+    if (result) {
+      await followedUser.updateOne({ $push: { followers: req.body.id } });
+      await currentUser.updateOne({ $push: { followings: req.params.id } });
+      res.status(200).json({ user: req.userId, followedOne: followedUser._id });
+    } else {
+      res.status(404).json("You already following this person");
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const unfollowUser = async (req, res) => {
+  try {
+    const unfollowedUser = await User.findById(req.params.id);
+    const currentUser = await User.findById(req.body.id);
+    if (req.userId === req.params.id) {
+      return res.status(404).json({ message: "You can not unfollow yourself" });
+    }
+    const followers = unfollowedUser.followers;
+    const result = Array.isArray(followers)
+      ? followers.includes(req.body.id)
+      : false;
+
+    if (result) {
+      await unfollowedUser.updateOne({ $pull: { followers: req.body.id } });
+      await currentUser.updateOne({ $pull: { followings: req.params.id } });
+      res.status(200).json("Unfollowed");
+    } else {
+      res.status(404).json("You are not following this person");
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+const logOut = (req,res) => {
+  res
+    .clearCookie("accessToken", { sameSite: "none", secure: true })
+    .status(200)
+    .json({ message: "Logout succesfully" });
+};
+
+module.exports = { follow: followUser, unfollow: unfollowUser, logout: logOut };

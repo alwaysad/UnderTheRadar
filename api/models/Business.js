@@ -41,6 +41,11 @@ const BusinessSchema=new Schema({
     rating:{
         type:Number,
         default:null
+    },
+    businessType:{
+        type:String,
+        default:null,
+        required:true
     }
 })
 

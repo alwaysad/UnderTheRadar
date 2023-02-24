@@ -3,6 +3,8 @@ import axios from "axios";
 import useInputValidate from "./customhooks/useinputValidate";
 
 const RegisterBusinessForm = (props) => {
+  const options = ['Restaurant', 'Butic', 'Coffe Shop', 'Art Shop', 'Cultural place','Accomadation'];
+  
   const [error, setError] = useState("");
   const nameRef = useRef();
   const emailRef = useRef();
@@ -10,8 +12,10 @@ const RegisterBusinessForm = (props) => {
   const confirmPasswordRef = useRef();
   const descriptionRef = useRef();
   const locationRef = useRef();
+  const typeRef=useRef();
 
   const submitHandler = async (e) => {
+    
     e.preventDefault();
     const enteredName = nameRef.current.value;
     const enteredMail = emailRef.current.value;
@@ -19,6 +23,7 @@ const RegisterBusinessForm = (props) => {
     const enteredConfirmPassword = confirmPasswordRef.current.value;
     const enteredDescription = descriptionRef.current.value;
     const enteredLocation = locationRef.current.value;
+    const enteredType=typeRef.current.value;
 
     if (enteredPassword !== enteredConfirmPassword) {
       console.log("Password doesnt match");
@@ -30,6 +35,7 @@ const RegisterBusinessForm = (props) => {
       password: enteredPassword,
       description: enteredDescription,
       location: enteredLocation,
+      type:enteredType
     };
     props.onSubmitHandler(business);
   };
@@ -81,7 +87,7 @@ const RegisterBusinessForm = (props) => {
             htmlFor="username"
             className="font-medium text-xl md:text-2xl w-7/12"
           >
-            Username*
+            Business name*
           </label>
           <input
             className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
@@ -93,6 +99,23 @@ const RegisterBusinessForm = (props) => {
             required
             pattern="^[a-zA-Z0-9]{4,10}$"
           ></input>
+        </div>
+        <div className="flex space-x-4 md:space-x-6 items-center">
+          <label
+            htmlFor="businessType"
+            className="font-medium text-xl md:text-2xl w-7/12"
+          >
+            Business Type
+          </label>
+          <select ref={typeRef} required>
+  
+                    <option>Please choose one option</option>
+                    {options.map((option, index) => {
+                        return <option key={index} >
+                            {option}
+                        </option>
+                    })}
+                </select>
         </div>
         <div className="flex space-x-4 md:space-x-6 items-center">
           <label

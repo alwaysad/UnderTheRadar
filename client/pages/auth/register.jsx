@@ -43,12 +43,14 @@ const Register = () => {
       password: newBusiness.password,
       description: newBusiness.description,
       location: newBusiness.location,
+      businessType:newBusiness.type
     };
     try {
       await axios
         .post("http://localhost:8800/api/auth/register/business", business)
         .then((response) => {
           console.log(response.data);
+          router.push('/auth/login')
         });
     } catch (error) {
       console.log(error.response.data);
