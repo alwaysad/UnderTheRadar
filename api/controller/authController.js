@@ -32,6 +32,7 @@ const BusinessRegister = async (req, res) => {
       location: req.body.location,
       description: req.body.description,
       businessType:req.body.businessType,
+      city:req.body.city,
     });
 
     const newly = await newBusiness.save();
@@ -62,9 +63,13 @@ const Login=async(req,res)=>{
             business.password
           );
           if (isCorrect) {
-            res.status(200).json("Business welcome");
+            const token = jwt.sign({ id: business._id }, process.env.JWT_KEY);
+            res
+              .cookie("accessToken", token, { httpOnly: true })
+              .status(200)
+              .json({ message: "Busines login welcome",token:token});
           } else {
-            res.status(500).json("Password is wrong");
+            res.status(500).json({ message: "Password is wrong" });
           }
         }
       } catch (error) {

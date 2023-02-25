@@ -13,7 +13,7 @@ const RegisterBusinessForm = (props) => {
   const descriptionRef = useRef();
   const locationRef = useRef();
   const typeRef=useRef();
-
+const cityRef=useRef();
   const submitHandler = async (e) => {
     
     e.preventDefault();
@@ -24,6 +24,7 @@ const RegisterBusinessForm = (props) => {
     const enteredDescription = descriptionRef.current.value;
     const enteredLocation = locationRef.current.value;
     const enteredType=typeRef.current.value;
+    const enteredCity=cityRef.current.value;
 
     if (enteredPassword !== enteredConfirmPassword) {
       console.log("Password doesnt match");
@@ -35,7 +36,8 @@ const RegisterBusinessForm = (props) => {
       password: enteredPassword,
       description: enteredDescription,
       location: enteredLocation,
-      type:enteredType
+      type:enteredType,
+      city:enteredCity
     };
     props.onSubmitHandler(business);
   };
@@ -65,11 +67,6 @@ const RegisterBusinessForm = (props) => {
     "",
     "(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{6,}).*$",
     "Password must be include 1 uppercase 1 lowercase 1 number and 1 special character and at least 6 characters "
-  );
-  const location = useInputValidate(
-    "",
-    "^([A-Za-zs]+),s*([A-Za-zs]+)$",
-    "Location format must be city/country"
   );
   const description = useInputValidate(
     "",
@@ -189,22 +186,35 @@ const RegisterBusinessForm = (props) => {
         </div>
         <div className="flex space-x-4 md:space-x-6 items-center">
           <label
+            htmlFor="city"
+            className="font-medium text-xl md:text-2xl w-7/12"
+          >
+            City
+          </label>
+          <input
+            className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
+            type="text"
+            placeholder="Enter your city"
+            ref={cityRef}
+            required
+          ></input>
+        </div>
+        <div className="flex space-x-4 md:space-x-6 items-center">
+          <label
             htmlFor="location"
             className="font-medium text-xl md:text-2xl w-7/12"
           >
-            Location
+            Adress
           </label>
           <input
             className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
             type="text"
             placeholder="Enter your location"
             ref={locationRef}
-            onBlur={location.blurHandler}
-            onChange={location.handleChange}
             required
-            pattern="^([A-Za-z\s]+),\s*([A-Za-z\s]+)$"
           ></input>
         </div>
+
 
         <button
           type="submit"

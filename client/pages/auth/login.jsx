@@ -12,7 +12,7 @@ const Login = () => {
   const loginHandler = async (loginCredentials) => {
     try {
       await axios
-        .post("http://localhost:8800/api/auth/login/user", loginCredentials)
+        .post("http://localhost:8800/api/auth/login/user", loginCredentials,{withCredentials:true})
         .then((response) => {
           console.log(response.data);
           router.push("/");

@@ -43,7 +43,8 @@ const Register = () => {
       password: newBusiness.password,
       description: newBusiness.description,
       location: newBusiness.location,
-      businessType:newBusiness.type
+      businessType:newBusiness.type,
+      city:newBusiness.city
     };
     try {
       await axios
