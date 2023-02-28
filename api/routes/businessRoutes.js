@@ -1,12 +1,13 @@
 const Business = require("../models/Business");
 
-const { getBusiness, editBusiness, deleteBusiness } = require("../controller/businessController");
+const { getBusiness, editBusiness, deleteBusiness, getAllBusiness } = require("../controller/businessController");
 const verifyToken = require("../middleware/jwt");
 
 
 const router = require("express").Router();
 
 //get business
+router.get('/getAllBusiness',getAllBusiness);
 router.get("/getBusiness/:id",verifyToken, getBusiness );
 //update business
 router.put("/edit/:id",verifyToken, editBusiness);

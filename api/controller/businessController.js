@@ -1,5 +1,25 @@
 const Business = require("../models/Business");
 
+
+
+const GetAllBusiness=async(req,res)=>{
+
+  const q=req.query;
+
+  const filters={
+    ...(q.type&&{businessType:q.type}),
+  }
+
+  try {
+    const business= await Business.find(filters);
+    res.status(200).json(business);
+  } catch (error) {
+    res.status(500).json({message:error.message})
+  }
+}
+
+
+
 const GetBusiness = async (req, res) => {
   try {
     const business = await Business.findById(req.params.id);
@@ -52,4 +72,5 @@ module.exports = {
   getBusiness: GetBusiness,
   editBusiness: EditBusiness,
   deleteBusiness: DeleteBusiness,
+  getAllBusiness:GetAllBusiness,
 };
