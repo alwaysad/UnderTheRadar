@@ -11,7 +11,7 @@ const GetAllBusiness=async(req,res)=>{
   }
 
   try {
-    const business= await Business.find(filters);
+    const business= await Business.find(filters||'');
     res.status(200).json(business);
   } catch (error) {
     res.status(500).json({message:error.message})

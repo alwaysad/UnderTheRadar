@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const Banner = () => {
   return (
     <div className="relative">
-      <Image src="/resized.png" alt="banner" width={2048} height={625} />
+      <Image src="/resized.png" alt="banner" width={2000} height={1400} />
       <div className=" hidden lg:block absolute  top-32 left-20 space-y-4">
         <p className="text-7xl text-black font-bold">UNDER THE RADAR</p>
         <p className="text-3xl max-w-lg font-bold ">

@@ -7,39 +7,51 @@ import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
 const HomePage = () => {
-
   return (
     <div>
       <Banner />
       <div className="flex justify-center items-center my-5 ">
         <p className="text-4xl font-bold ">Explore</p>
       </div>
-      <div className="flex justify-center items-center flex-col space-y-4 md:flex-row md:space-x-4  md:space-y-0 mt-4">
+      <div className="flex container mx-auto justify-center items-center flex-col space-y-4 md:flex-row md:space-x-4  md:space-y-0 mt-4">
         <Link href="/business/Art Shop">
-          <div className="object-cover group hover:cursor-pointer">
+          <div className="relative object-cover group hover:cursor-pointer">
+            <div className="absolute top-6 left-6 text-white">
+              <p className=" text-xl w-40">Discover the Art</p>
+              <span className="font-bold text-2xl ">Art Galleries</span>
+            </div>
             <Image
               alt="Art Gallery"
-              src="/artgal.png"
+              src="/artgallery.png"
               width={500}
               height={500}
             ></Image>
           </div>
         </Link>
-        <div>
-          <Link href="/business/Accomadation">
-            <div className="object-cover group hover:cursor-pointer">
-              <Image
-                alt="Hotel"
-                src="/hotel.jpg"
-                width={500}
-                height={500}
-              ></Image>
+
+        <Link href="/business/Accomadation">
+          <div className=" relative object-cover group hover:cursor-pointer">
+            <div className="absolute top-6 left-6 text-white">
+              <p className=" text-xl w-40">Find your place</p>
+              <span className="font-bold text-2xl ">Hotels&Hostels</span>
             </div>
-          </Link>
-        </div>
-        <div>
+            <Image
+              alt="Hotel"
+              src="/hotel.jpg"
+              width={500}
+              height={500}
+            ></Image>
+          </div>
+        </Link>
+
+       
           <Link href="/business/Restaurant">
-            <div className="object-cover group hover:cursor-pointer">
+            <div className="relative object-cover group hover:cursor-pointer">
+              <div className="absolute top-6 left-6 text-white">
+                {/* <p className="absolute top-10 left-10 text-white text-xl w-48">Explore local food<span className="font-bold text-2xl">Restaurants</span></p> */}
+                <p className=" text-xl w-40">Explore local food</p>
+                <span className="font-bold text-2xl ">Restaurants</span>
+              </div>
               <Image
                 alt="Restaurant"
                 src="/restaurant.jpg"
@@ -48,20 +60,25 @@ const HomePage = () => {
               ></Image>
             </div>
           </Link>
-        </div>
-        <div>
+        
+       
           <Link href="/business/Cultural Place">
-            <div className="object-cover group hover:cursor-pointer">
+            <div className="relative object-cover group hover:cursor-pointer">
+              <div className="absolute top-6 left-6 text-white">
+                {/* <p className="absolute top-10 left-10 text-white text-xl w-48">Explore local food<span className="font-bold text-2xl">Restaurants</span></p> */}
+                <p className=" text-xl w-44">Discover the history</p>
+                <span className="font-bold text-2xl ">Cultural activities</span>
+              </div>
               <Image
                 alt="Cultural places"
-                src="/culture.jpg"
+                src="/culturalplace.jpg"
                 width={500}
                 height={500}
               ></Image>
             </div>
           </Link>
         </div>
-      </div>
+      
     </div>
   );
 };

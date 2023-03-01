@@ -55,7 +55,7 @@ const cityRef=useRef();
 
   const businessName = useInputValidate(
     "",
-    "^[a-zA-Z0-9]{4,10}$",
+    "^[a-zA-Z0-9]{4,20}$",
     "between 4-10 characters"
   );
   const email = useInputValidate(
@@ -94,7 +94,7 @@ const cityRef=useRef();
             onBlur={businessName.blurHandler}
             onChange={businessName.handleChange}
             required
-            pattern="^[a-zA-Z0-9]{4,10}$"
+            pattern="^[a-zA-Z0-9]{4,20}$"
           ></input>
         </div>
         <div className="flex space-x-4 md:space-x-6 items-center">
