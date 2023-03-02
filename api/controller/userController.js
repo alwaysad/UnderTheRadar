@@ -1,5 +1,19 @@
 const User = require("../models/User");
 
+
+const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      throw new Error("there is no user with given details");
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 const followUser = async (req, res) => {
   try {
     const followedUser = await User.findById(req.params.id);
@@ -57,4 +71,4 @@ const logOut = (req,res) => {
     .json({ message: "Logout succesfully" });
 };
 
-module.exports = { follow: followUser, unfollow: unfollowUser, logout: logOut };
+module.exports = { follow: followUser, unfollow: unfollowUser, logout: logOut, GetUser:getUser };

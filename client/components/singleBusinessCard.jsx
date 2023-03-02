@@ -5,6 +5,7 @@ import StarIcon from "@mui/icons-material/Star";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
+import Link from "next/link";
 
 const theme = createTheme({
   palette: {
@@ -26,26 +27,28 @@ const SingleBusiness = ({
   city,
   rating,
   commentNumber,
+  id
 }) => {
   return (
     <ThemeProvider theme={theme}>
-      <div
-        className="rounded-lg border border-teal-800 shadow-lg w-72 outline-none overflow-hidden"
+      <Link href={`/businessDetails/${id}`}>
+      <div 
+        className="rounded-lg border group  border-teal-800 shadow-lg w-72 outline-none overflow-hidden"
         style={{ height: "360px" }}
-      >
-        <Image src="/stock.jpg" width={600} height={600} />
+      > 
+        <Image src="/stock.jpg" alt="business" width={600} height={600} />
         <div className="flex  flex-col justify-start space-y-2 py-4 px-4">
-          <div className="flex  justify-start">
+          <div className="flex  justify-start space-x-3">
             <PlaceIcon />
             <p> {city}</p>
           </div>
 
-          <div className="flex  justify-start">
+          <div className="flex space-x-3 justify-start">
             <BusinessIcon />
             <p> {name}</p>
           </div>
 
-          <div className="flex justify-start w-60">
+          <div className="flex justify-start w-60  group-hover:text-green-400 duration-200 font-medium">
             <p> {description}</p>
           </div>
 
@@ -56,6 +59,7 @@ const SingleBusiness = ({
           </div>
         </div>
       </div>
+      </Link>
     </ThemeProvider>
   );
 };

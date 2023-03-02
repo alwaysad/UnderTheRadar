@@ -8,7 +8,7 @@ const router = require("express").Router();
 
 //get business
 router.get('/getAllBusiness',getAllBusiness);
-router.get("/getBusiness/:id",verifyToken, getBusiness );
+router.get("/getBusiness/:id", getBusiness );
 //update business
 router.put("/edit/:id",verifyToken, editBusiness);
 //delete business

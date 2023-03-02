@@ -4,7 +4,8 @@ const Business = require("../models/Business");
 
 const GetComments = async (req, res) => {
   try {
-    const comments = await Comment.find();
+    const business= await Business.findById(req.params.id);
+    const comments = await Comment.find({business:business._id.toString()});
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json(error);

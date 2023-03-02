@@ -1,4 +1,4 @@
-import SingleBusiness from "../../components/singleBusiness";
+import SingleBusiness from "../../components/singleBusinessCard";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -29,6 +29,7 @@ const Businesses = (props) => {
       <div className=" mt-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
         {business.map((business) => (
           <SingleBusiness
+            id={business._id.toString()}
             key={business._id.toString()}
             name={business.name}
             description={business.description}

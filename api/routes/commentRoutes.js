@@ -5,7 +5,7 @@ const User = require("../models/User");
 const { getComments, makeComment, deleteComment, editComment, likeComment, dislikeComment } = require("../controller/commentController");
 
 //get all comments
-router.get("/getcomments", getComments);
+router.get("/getcomments/:id", getComments);
 
 //make comment
 router.post("/makecomment", makeComment);
