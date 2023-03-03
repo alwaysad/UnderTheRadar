@@ -1,13 +1,14 @@
 import SingleBusiness from "../../components/singleBusinessCard";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import axios from "axios";
 
 const Businesses = (props) => {
   const router = useRouter();
   const [business, setBusiness] = useState([]);
   const { businesses } = router.query;
-  const businessTypeFilter = async () => {
+  const businessTypeFilter = useCallback(async () => {
     if (businesses === "allTypes") {
       const response = await axios.get(
         `http://localhost:8800/api/business/getAllBusiness`
@@ -19,10 +20,10 @@ const Businesses = (props) => {
       );
       setBusiness(response.data);
     }
-  };
+  }, [businesses]);
   useEffect(() => {
     businessTypeFilter();
-  }, [businesses]);
+  }, [businessTypeFilter]);
 
   return (
     <div className="flex justify-center mt-10 min-h-screen">

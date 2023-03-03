@@ -18,7 +18,7 @@ const theme = createTheme({
   },
 });
 
-const SingleBusinessDetail = ({ business, commentnumber,id}) => {
+const SingleBusinessDetail = ({ business, commentnumber}) => {
 
 const [comments,setComments]=useState([]);
 
@@ -27,14 +27,17 @@ const [comments,setComments]=useState([]);
     <StarIcon color="secondary" key={index} />
   ));
 
-    const GetComments=async()=>{
-      const response= await axios.get(`http://localhost:8800/api/comment/getcomments/${id}`)
+    const getComments=async()=>{
+      if(!business._id){
+        return;
+      }
+      const response= await axios.get(`http://localhost:8800/api/comment/getcomments/${business._id.toString()}`)
       setComments(response.data)
     }
 
     useEffect(() => {
-        GetComments();
-    }, []);
+        getComments();
+    }, [business]);
 
   return (
     <ThemeProvider theme={theme}>
