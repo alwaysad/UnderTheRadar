@@ -38,7 +38,7 @@ const [comments,setComments]=useState([]);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex min-h-screen items-center justify-center px-10 md:px-20 lg:px-40">
+      <div className="flex min-h-screen items-center justify-center my-20 px-10 md:px-20 lg:px-40">
         <div className="flex flex-col space-y-4 max-w-2xl mx-auto">
           <h1 className="font-bold text-4xl">{business.description}</h1>
           <span className="font-medium text-2xl">About this business</span>
@@ -71,7 +71,7 @@ const [comments,setComments]=useState([]);
             {stars}
             <span className="text-orange-400">{business.rating}</span>
           </div>
-          {comments.map((comment)=>(<SingleComment key={comment._id} text={comment.text} userId={comment.user}/>))}
+          {comments.map((comment)=>(<SingleComment key={comment._id} text={comment.text} like={comment.like} dislike={comment.dislike} rating={comment.rating} createdAt={comment.createdAt} userId={comment.user}/>))}
         </div>
       </div>
     </ThemeProvider>

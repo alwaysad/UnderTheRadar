@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import SingleBusinessDetail from "../../components/singleBusinessDetails";
 
-
 const BusinessDetail = () => {
   const router = useRouter();
   const [business, setBusiness] = useState({});
@@ -11,6 +10,7 @@ const BusinessDetail = () => {
   const { businessId } = router.query;
 
   const fetchBusinessDeails = async () => {
+    if (!businessId) return;
     const response = await axios.get(
       `http://localhost:8800/api/business/getBusiness/${businessId}`
     );
@@ -25,7 +25,15 @@ const BusinessDetail = () => {
 
   return (
     <div>
-      <SingleBusinessDetail id={businessId} business={business} commentnumber={business.comments ? business.comments.length : 0} comments={business.comments}  />
+      {!businessId && <div>Loading...</div>}
+      {businessId && (
+        <SingleBusinessDetail
+          id={businessId}
+          business={business}
+          commentnumber={business.comments ? business.comments.length : 0}
+          comments={business.comments}
+        />
+      )}
     </div>
   );
 };
