@@ -65,7 +65,7 @@ const DeleteComment = async (req, res) => {
     } else {
       res
         .status(404)
-        .json({ message: "You can not delete other person comment" });
+        .json({ message: "You can not delete other person comment", user:user._id.toString(), gönderen:req.body.userId });
     }
   } catch (error) {
     res.status(500).json(error);

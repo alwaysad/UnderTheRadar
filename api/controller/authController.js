@@ -52,7 +52,7 @@ const Login=async(req,res)=>{
             res
               .cookie("accessToken", token, { httpOnly: true })
               .status(200)
-              .json({ message: "Personal login welcome",token:token});
+              .json({ message: "Personal login welcome",token:token,user});
           } else {
             res.status(500).json({ message: "Password is wrong" });
           }

@@ -2,23 +2,24 @@ const router = require("express").Router();
 const Comment = require("../models/Comments");
 const Business = require("../models/Business");
 const User = require("../models/User");
+const verifyToken = require("../middleware/jwt");
 const { getComments, makeComment, deleteComment, editComment, likeComment, dislikeComment } = require("../controller/commentController");
 
 //get all comments
 router.get("/getcomments/:id", getComments);
 
 //make comment
-router.post("/makecomment", makeComment);
+router.post("/makecomment",verifyToken,makeComment);
 
 //delete comment delete from all places(user and business)
 router.delete("/delete/:id", deleteComment);
 //edit comment
-router.put("/edit/:id",editComment );
+router.put("/edit/:id",verifyToken,editComment );
 
 //like comment
-router.put("/like/:id", likeComment );
+router.put("/like/:id",verifyToken,likeComment );
 
 //dislike comment
-router.put("/dislike/:id", dislikeComment );
+router.put("/dislike/:id", verifyToken,dislikeComment );
 
 module.exports = router;
