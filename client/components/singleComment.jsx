@@ -26,7 +26,9 @@ const SingleComment = ({
   const authCtx = useContext(AuthContext);
 
   const getUser = useCallback(async () => {
-    const response = await axios.get(`http://localhost:8800/api/user/getUser/${userId}`);
+    const response = await axios.get(
+      `http://localhost:8800/api/user/getUser/${userId}`
+    );
     setUser(response.data);
   }, [userId]);
 
@@ -69,12 +71,9 @@ const SingleComment = ({
   const likeComment = async () => {
     axios.defaults.withCredentials = true;
     await axios.put(`http://localhost:8800/api/comment/like/${id}`, {
-     
-        userId: authCtx.userId,
-     
+      userId: authCtx.userId,
     });
   };
- 
 
   const deleteComment = async () => {
     axios.defaults.withCredentials = true;
@@ -139,15 +138,13 @@ const SingleComment = ({
           <div className="border border-l-1"></div>
           <span className="font-light"> {time}</span>
         </div>
-        <LoremIpsum />
-        {isUser && <DeleteIcon onClick={deleteComment} />}
+        {text} {isUser && <DeleteIcon onClick={deleteComment} />}
         {isUser && <EditIcon onClick={editComment} />}
         <div className="flex items-center space-x-2 ">
           <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
           <div>{like}</div>
-          <ThumbDownAltIcon className="cursor-pointer" /> 
+          <ThumbDownAltIcon className="cursor-pointer" />
         </div>
-
         <div className="border border-b-1"></div>
       </div>
     </ThemeProvider>

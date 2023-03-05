@@ -53,15 +53,18 @@ const DeleteComment = async (req, res) => {
       if (exist) {
        
         await Comment.findByIdAndDelete(req.params.id);
-        
+        const remainingComments = await Comment.find({ business: business });
+        const totalRating = remainingComments.reduce((acc, cur) => acc + cur.rating, 0);
+        const newRating = remainingComments.length > 0 ? totalRating / remainingComments.length : 0;
         await Business.findByIdAndUpdate(business, {
           $pull: { comments: req.params.id },
+          $set:{rating:newRating}
        
         });
         await User.findByIdAndUpdate(user, {
           $pull: { comments: req.params.id },
         });
-        res.status(200).json("Comment deleted");
+        res.status(200).json({newrating:newRating,totalRating:totalRating});
       } else {
         res.status(404).json("Comment doesnt exist");
       }
