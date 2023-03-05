@@ -26,9 +26,7 @@ const SingleComment = ({
   const authCtx = useContext(AuthContext);
 
   const getUser = useCallback(async () => {
-    const response = await axios.get(
-      `http://localhost:8800/api/user/getUser/${userId}`
-    );
+    const response = await axios.get(`http://localhost:8800/api/user/getUser/${userId}`);
     setUser(response.data);
   }, [userId]);
 
@@ -69,21 +67,31 @@ const SingleComment = ({
   });
 
   const likeComment = async () => {
+    axios.defaults.withCredentials = true;
     await axios.put(`http://localhost:8800/api/comment/like/${id}`, {
-      userId: authCtx.userId,
+     
+        userId: authCtx.userId,
+     
     });
-    
   };
+ 
 
   const deleteComment = async () => {
+    axios.defaults.withCredentials = true;
+
     await axios.delete(`http://localhost:8800/api/comment/delete/${id}`, {
-      userId: authCtx.userId,
+      data: {
+        userId: authCtx.userId,
+      },
     });
   };
 
   const editComment = async () => {
+    axios.defaults.withCredentials = true;
     await axios.delete(`http://localhost:8800/api/comment/edit/${id}`, {
-      userId: authCtx.userId,
+      data: {
+        userId: authCtx.userId,
+      },
     });
   };
 
@@ -137,7 +145,7 @@ const SingleComment = ({
         <div className="flex items-center space-x-2 ">
           <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
           <div>{like}</div>
-          <ThumbDownAltIcon className="cursor-pointer" /> <div>{dislike}</div>
+          <ThumbDownAltIcon className="cursor-pointer" /> 
         </div>
 
         <div className="border border-b-1"></div>

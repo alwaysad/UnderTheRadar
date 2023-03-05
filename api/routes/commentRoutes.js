@@ -12,7 +12,7 @@ router.get("/getcomments/:id", getComments);
 router.post("/makecomment",verifyToken,makeComment);
 
 //delete comment delete from all places(user and business)
-router.delete("/delete/:id", deleteComment);
+router.delete("/delete/:id",verifyToken, deleteComment);
 //edit comment
 router.put("/edit/:id",verifyToken,editComment );
 

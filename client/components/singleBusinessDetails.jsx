@@ -74,7 +74,7 @@ const [comments,setComments]=useState([]);
             {stars}
             <span className="text-orange-400">{business.rating}</span>
           </div>
-          {comments.map((comment)=>(<SingleComment key={comment._id} id={comment._id} text={comment.text} like={comment.like} dislike={comment.dislike} rating={comment.rating} createdAt={comment.createdAt} userId={comment.user}/>))}
+          {comments.map((comment)=>(<SingleComment key={comment._id} id={comment._id.toString()} text={comment.text} like={comment.like} dislike={comment.dislike} rating={comment.rating} createdAt={comment.createdAt} userId={comment.user}/>))}
         </div>
       </div>
     </ThemeProvider>

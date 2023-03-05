@@ -51,9 +51,12 @@ const DeleteComment = async (req, res) => {
       : false;
     if (user._id.toString() === req.body.userId) {
       if (exist) {
+       
         await Comment.findByIdAndDelete(req.params.id);
+        
         await Business.findByIdAndUpdate(business, {
           $pull: { comments: req.params.id },
+       
         });
         await User.findByIdAndUpdate(user, {
           $pull: { comments: req.params.id },
