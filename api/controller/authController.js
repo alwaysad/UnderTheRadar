@@ -15,6 +15,7 @@ const Register = async (req, res) => {
       password: hashedPassword,
       email: req.body.email,
       birthDate: req.body.birthDate,
+      img:req.body.img
     });
     const newUser = await user.save();
     res.status(200).json("registered succesfully");

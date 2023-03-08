@@ -24,6 +24,7 @@ const Register = () => {
       email: newUser.email,
       birthDate: newUser.birthDate,
       password: newUser.password,
+      img:newUser.img,
     };
     try {
       await axios
