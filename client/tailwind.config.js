@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -14,7 +15,13 @@ module.exports = {
         'primary':'#101010',
         'secondary':'#FDAF01'
       }
+      
     },
+    extend:{
+      backgroundImage:{
+        'comment':"url('./public/comment.PNG')"
+      }
+    }
   },
   plugins: [],
 }

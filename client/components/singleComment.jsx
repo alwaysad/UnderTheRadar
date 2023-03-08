@@ -4,12 +4,13 @@ import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { LoremIpsum } from "react-lorem-ipsum";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import AuthContext from "../context/authContext";
+import BusinessContext from "../context/businessContext";
+import CommentContext from "../context/commentContext";
 
 const SingleComment = ({
   text,
@@ -19,11 +20,14 @@ const SingleComment = ({
   like,
   dislike,
   id,
+  businessId,
 }) => {
   const [user, setUser] = useState({});
   const [time, setTime] = useState("");
   const [isUser, setIsUser] = useState(false);
   const authCtx = useContext(AuthContext);
+  const commentCtx = useContext(CommentContext);
+  const businessCtx = useContext(BusinessContext);
 
   const getUser = useCallback(async () => {
     const response = await axios.get(
@@ -73,6 +77,7 @@ const SingleComment = ({
     await axios.put(`http://localhost:8800/api/comment/like/${id}`, {
       userId: authCtx.userId,
     });
+    commentCtx.getComments(businessId);
   };
 
   const deleteComment = async () => {
@@ -83,6 +88,7 @@ const SingleComment = ({
         userId: authCtx.userId,
       },
     });
+    businessCtx.businessHandler(businessId);
   };
 
   const editComment = async () => {
@@ -98,32 +104,27 @@ const SingleComment = ({
     const date = new Date(dateString);
     const now = new Date();
 
-    const yearDiff = now.getFullYear() - date.getFullYear();
-    const monthDiff = now.getMonth() - date.getMonth();
-    const dayDiff = now.getDate() - date.getDate();
-    const hourDiff = now.getHours() - date.getHours();
-    const minuteDiff = now.getMinutes() - date.getMinutes();
+    const timeDiffInMs = now.getTime() - date.getTime();
+    const timeDiffInMinutes = Math.round(timeDiffInMs / (1000 * 60));
+    const timeDiffInHours = Math.round(timeDiffInMs / (1000 * 60 * 60));
+    const timeDiffInDays = Math.round(timeDiffInMs / (1000 * 60 * 60 * 24));
 
     let formattedString = "";
 
-    if (yearDiff > 0) {
-      formattedString += `${yearDiff} year${yearDiff > 1 ? "s" : ""} `;
-    }
-
-    if (monthDiff > 0) {
-      formattedString += `${monthDiff} month${monthDiff > 1 ? "s" : ""} `;
-    }
-
-    if (dayDiff > 0) {
-      formattedString += `${dayDiff} day${dayDiff > 1 ? "s" : ""} `;
-    }
-
-    if (hourDiff > 0) {
-      formattedString += `${hourDiff} hour${hourDiff > 1 ? "s" : ""} `;
-    }
-
-    if (minuteDiff > 0) {
-      formattedString += `${minuteDiff} minute${minuteDiff > 1 ? "s" : ""} `;
+    if (timeDiffInDays >= 1) {
+      formattedString += `${timeDiffInDays} day${
+        timeDiffInDays > 1 ? "s" : ""
+      } `;
+    } else if (timeDiffInHours >= 1) {
+      formattedString += `${timeDiffInHours} hour${
+        timeDiffInHours > 1 ? "s" : ""
+      } `;
+    } else if (timeDiffInMinutes > 0) {
+      formattedString += `${timeDiffInMinutes} minute${
+        timeDiffInMinutes > 1 ? "s" : ""
+      } `;
+    } else {
+      formattedString = "just now";
     }
 
     setTime(formattedString);
@@ -138,8 +139,13 @@ const SingleComment = ({
           <div className="border border-l-1"></div>
           <span className="font-light"> {time}</span>
         </div>
-        {text} {isUser && <DeleteIcon onClick={deleteComment} />}
-        {isUser && <EditIcon onClick={editComment} />}
+        {text}{" "}
+        {isUser && (
+          <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
+        )}
+        {isUser && (
+          <EditIcon className="cursor-pointer" onClick={editComment} />
+        )}
         <div className="flex items-center space-x-2 ">
           <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
           <div>{like}</div>

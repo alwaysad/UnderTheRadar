@@ -8,8 +8,7 @@ import SingleComment from "./singleComment";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import Portal from "./modals/commentModal";
 import CommentModal from "./commentModal";
-import BusinessContext from "../context/businessContext";
-
+import CommentContext from "../context/commentContext";
 const theme = createTheme({
   palette: {
     primary: {
@@ -24,9 +23,9 @@ const theme = createTheme({
 });
 
 const SingleBusinessDetail = ({ business, commentnumber }) => {
-  const [comments, setComments] = useState([]);
   const [open, setOpen] = useState(false);
 
+  const commentCtx = useContext(CommentContext);
   const openHandler = () => {
     setOpen(true);
   };
@@ -38,21 +37,15 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
     <StarIcon color="secondary" key={index} />
   ));
 
-  const getComments = async () => {
+  const fetchCommentDetails = () => {
     if (!business._id) {
       return;
     }
-    const response = await axios.get(
-      `http://localhost:8800/api/comment/getcomments/${business._id.toString()}`
-    );
-    setComments(response.data);
+    commentCtx.getComments(business._id.toString());
   };
 
   useEffect(() => {
-    if (!business._id) {
-      return;
-    }
-    getComments(business._id.toString());
+    fetchCommentDetails();
   }, [commentnumber]);
 
   return (
@@ -110,7 +103,7 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
               Add comment <AddCommentIcon />
             </button>
           </div>
-          {comments.map((comment) => (
+          {commentCtx.comments.map((comment) => (
             <SingleComment
               key={comment._id}
               id={comment._id.toString()}
@@ -120,6 +113,7 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
               rating={comment.rating}
               createdAt={comment.createdAt}
               userId={comment.user}
+              businessId={business._id ? business._id.toString() : ""}
             />
           ))}
         </div>

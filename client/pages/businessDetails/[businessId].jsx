@@ -12,13 +12,11 @@ const BusinessDetail = () => {
   const businessCtx = useContext(BusinessContext);
   const fetchBusinessDetails = () => {
     businessCtx.businessHandler(businessId);
-    
   };
 
   useEffect(() => {
     fetchBusinessDetails();
   }, [businessId]);
-
 
   return (
     <div>
@@ -27,9 +25,12 @@ const BusinessDetail = () => {
         <SingleBusinessDetail
           id={businessId}
           business={businessCtx.business}
-          commentnumber={businessCtx.business.comments ? businessCtx.business.comments.length : 0}
+          commentnumber={
+            businessCtx.business.comments
+              ? businessCtx.business.comments.length
+              : 0
+          }
           comments={businessCtx.business.comments}
-          
         />
       )}
     </div>
