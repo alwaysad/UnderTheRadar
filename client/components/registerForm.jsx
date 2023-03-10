@@ -30,7 +30,7 @@ const RegisterForm = (props) => {
       return;
     }
   
-    const imageRef = ref(storage, "musti");
+    const imageRef = ref(storage, entereduserName);
     await uploadBytes(imageRef, file);
   
     const url = await getDownloadURL(imageRef);

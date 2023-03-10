@@ -11,7 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import AuthContext from "../context/authContext";
 import BusinessContext from "../context/businessContext";
 import CommentContext from "../context/commentContext";
-
+import { Avatar } from "@mui/material";
 const SingleComment = ({
   text,
   userId,
@@ -134,12 +134,14 @@ const SingleComment = ({
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-4">
         <span className="font-bold"> {user.username}</span>
+       
+       <Avatar src={user.img}/>
         <div className="flex space-x-2">
           {stars}
           <div className="border border-l-1"></div>
           <span className="font-light"> {time}</span>
         </div>
-        {text}{" "}
+        {text}
         {isUser && (
           <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
         )}

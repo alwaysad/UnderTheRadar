@@ -54,9 +54,7 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
         <div className="flex flex-col space-y-4 max-w-2xl mx-auto">
           <h1 className="font-bold text-4xl">{business.name}</h1>
           <span className="font-medium text-2xl">About this business</span>
-          <div className="font-light text-xl">
-            <LoremIpsum />
-          </div>
+          <div className="font-light text-xl">{business.description}</div>
           {open && (
             <Portal>
               <CommentModal
@@ -88,11 +86,11 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
           </div>
 
           <div className="font-bold text-2xl">Reviews</div>
-          <div className="flex  flex-col space-y-1 md:flex-row md:justify-between md:space-y-0">
+          <div className="flex  flex-col space-y-1 md:flex-row md:space-x-8 md:space-y-0">
             <div className="font-medium text-xl flex space-x-2 items-center">
               <p>{commentnumber} reviews for this business</p>
               {stars}
-              <span className="text-orange-400">
+              <span className="text-orange-400">  
                 {business.rating ? business.rating.toFixed(1) : 0}
               </span>
             </div>
