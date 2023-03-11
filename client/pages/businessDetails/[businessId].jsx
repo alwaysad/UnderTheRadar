@@ -2,26 +2,25 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import SingleBusinessDetail from "../../components/singleBusinessDetails";
-import AuthContext from "../../context/authContext";
 import BusinessContext from "../../context/businessContext";
+import LoopIcon from "@mui/icons-material/Loop";
 const BusinessDetail = () => {
   const router = useRouter();
-  const [business, setBusiness] = useState({});
-  const authCtx = useContext(AuthContext);
   const { businessId } = router.query;
   const businessCtx = useContext(BusinessContext);
-  const fetchBusinessDetails = () => {
-    businessCtx.businessHandler(businessId);
-  };
 
   useEffect(() => {
-    fetchBusinessDetails();
+    businessCtx.businessHandler(businessId);
   }, [businessId]);
 
   return (
     <div>
-      {!businessId && <div>Loading...</div>}
-      {businessId && (
+      {businessCtx.isLoading && (
+        <div className="flex items-center justify-center min-h-screen ">
+          <LoopIcon className="animate-spin" />
+        </div>
+      )}
+      {!businessCtx.isLoading && (
         <SingleBusinessDetail
           id={businessId}
           business={businessCtx.business}

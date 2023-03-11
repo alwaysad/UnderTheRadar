@@ -3,12 +3,12 @@ import StarIcon from "@mui/icons-material/Star";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import SingleComment from "./singleComment";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import Portal from "./modals/commentModal";
 import CommentModal from "./commentModal";
 import CommentContext from "../context/commentContext";
+import LoopIcon from "@mui/icons-material/Loop";
 const theme = createTheme({
   palette: {
     primary: {
@@ -90,7 +90,7 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
             <div className="font-medium text-xl flex space-x-2 items-center">
               <p>{commentnumber} reviews for this business</p>
               {stars}
-              <span className="text-orange-400">  
+              <span className="text-orange-400">
                 {business.rating ? business.rating.toFixed(1) : 0}
               </span>
             </div>
@@ -101,6 +101,11 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
               Add comment <AddCommentIcon />
             </button>
           </div>
+          {commentCtx.isLoading && (
+            <div className="">
+              <LoopIcon className="animate-spin" />
+            </div>
+          )}
           {commentCtx.comments.map((comment) => (
             <SingleComment
               key={comment._id}

@@ -1,15 +1,9 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import AuthContext from "../context/authContext";
 import BusinessContext from "../context/businessContext";
 
-const CommentModal = ({
-  businessName,
-  businessId,
-  onClose,
-  onBusinessUpdate,
-  
-}) => {
+const CommentModal = ({ businessName, businessId, onClose }) => {
   const [enteredText, setEnteredText] = useState("");
   const [enteredRating, setEnteredRating] = useState(0);
   const authCtx = useContext(AuthContext);
@@ -43,20 +37,20 @@ const CommentModal = ({
           <p className="font-bold mb-2 text-black  text-3xl">{businessName}</p>
           <form onSubmit={submitHandler}>
             <div className="flex flex-col space-y-2 ">
-              <input className="px-4 py-8 border-black border-2 rounded-md outline-none break-all"
+              <input
+                className="px-4 py-8 border-black border-2 rounded-md outline-none break-all"
                 type="text"
-                onChange={handleTextChange} 
+                onChange={handleTextChange}
                 placeholder="Your comment"
               ></input>
-              <input className="px-2 py-2 border-black border-2 rounded-md outline-none"
+              <input
+                className="px-2 py-2 border-black border-2 rounded-md outline-none"
                 type="number"
                 onChange={handleRatingChange}
                 placeholder="Your rating"
               ></input>
-              <button className="border rounded-lg py-2 border-black overflow-hidden bg-black text-white hover:text-green-400 duration-150"
-                onClick={() => {
-                  businessCtx.businessHandler(businessId);
-                }}
+              <button
+                className="border rounded-lg py-2 border-black overflow-hidden bg-black text-white hover:text-green-400 duration-150"
                 type="submit"
               >
                 Submit
