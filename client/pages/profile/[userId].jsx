@@ -1,30 +1,34 @@
 import { useRouter } from "next/router";
 import { Avatar } from "@mui/material";
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { useEffect, useContext } from "react";
+
 import Follower from "../../components/followers";
 import UserContext from "../../context/userContext";
 import LoopIcon from "@mui/icons-material/Loop";
-import AvatarGroup from "@mui/material/AvatarGroup";
+
+import CommentContext from "../../context/commentContext";
+import UserProfileComment from "../../components/userProfileComment";
+import newRequest from "../../utils/makerequest";
 
 const Profile = () => {
   const router = useRouter();
   const { userId } = router.query;
   const userCtx = useContext(UserContext);
-
+  const commentCtx = useContext(CommentContext);
   const followHandler = async () => {
-    axios.defaults.withCredentials = true;
-    await axios.put(`http://localhost:8800/api/user/follow/${userId}`);
+ 
+    await newRequest.put(`user/follow/${userId}`);
     userCtx.userHandler(userId);
   };
   const unfollowHandler = async () => {
-    axios.defaults.withCredentials = true;
-    await axios.put(`http://localhost:8800/api/user/unfollow/${userId}`);
+   
+    await newRequest.put(`user/unfollow/${userId}`);
     userCtx.userHandler(userId);
   };
 
   useEffect(() => {
     userCtx.userHandler(userId);
+    commentCtx.getUserComments(userId);
   }, [userId]);
 
   return (
@@ -80,7 +84,12 @@ const Profile = () => {
                 ))}
             </div>
           </div>
-          <div>Comments</div>
+          <div>
+            {!commentCtx.isLoading &&
+              commentCtx.usercomments.map((comment) => (  
+                <UserProfileComment key={comment.text} comment={comment} />
+              ))}
+          </div>
         </div>
       )}
     </div>

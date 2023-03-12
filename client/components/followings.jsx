@@ -1,11 +1,11 @@
 import { Avatar } from "@mui/material";
-import axios from "axios";
 import { useState, useEffect } from "react";
+import newRequest from "../utils/makerequest";
 const Followings = ({ id }) => {
   const [user, setUser] = useState({});
   const getUser = async () => {
-    const response = await axios.get(
-      `http://localhost:8800/api/user/getUser/${id}`
+    const response = await newRequest.get(
+      `user/getUser/${id}`
     );
     setUser(response.data);
   };

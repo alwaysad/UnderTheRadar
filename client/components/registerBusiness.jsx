@@ -1,10 +1,16 @@
 import { useRef, useState } from "react";
-import axios from "axios";
 import useInputValidate from "./customhooks/useinputValidate";
 
 const RegisterBusinessForm = (props) => {
-  const options = ['Restaurant', 'Butic', 'Coffe Shop', 'Art Shop', 'Cultural place','Accomadation'];
-  
+  const options = [
+    "Restaurant",
+    "Butic",
+    "Coffe Shop",
+    "Art Shop",
+    "Cultural place",
+    "Accomadation",
+  ];
+
   const [error, setError] = useState("");
   const nameRef = useRef();
   const emailRef = useRef();
@@ -12,10 +18,9 @@ const RegisterBusinessForm = (props) => {
   const confirmPasswordRef = useRef();
   const descriptionRef = useRef();
   const locationRef = useRef();
-  const typeRef=useRef();
-const cityRef=useRef();
+  const typeRef = useRef();
+  const cityRef = useRef();
   const submitHandler = async (e) => {
-    
     e.preventDefault();
     const enteredName = nameRef.current.value;
     const enteredMail = emailRef.current.value;
@@ -23,8 +28,8 @@ const cityRef=useRef();
     const enteredConfirmPassword = confirmPasswordRef.current.value;
     const enteredDescription = descriptionRef.current.value;
     const enteredLocation = locationRef.current.value;
-    const enteredType=typeRef.current.value;
-    const enteredCity=cityRef.current.value;
+    const enteredType = typeRef.current.value;
+    const enteredCity = cityRef.current.value;
 
     if (enteredPassword !== enteredConfirmPassword) {
       console.log("Password doesnt match");
@@ -36,8 +41,8 @@ const cityRef=useRef();
       password: enteredPassword,
       description: enteredDescription,
       location: enteredLocation,
-      type:enteredType,
-      city:enteredCity
+      type: enteredType,
+      city: enteredCity,
     };
     props.onSubmitHandler(business);
   };
@@ -105,14 +110,11 @@ const cityRef=useRef();
             Business Type
           </label>
           <select ref={typeRef} required>
-  
-                    <option>Please choose one option</option>
-                    {options.map((option, index) => {
-                        return <option key={index} >
-                            {option}
-                        </option>
-                    })}
-                </select>
+            <option>Please choose one option</option>
+            {options.map((option, index) => {
+              return <option key={index}>{option}</option>;
+            })}
+          </select>
         </div>
         <div className="flex space-x-4 md:space-x-6 items-center">
           <label
@@ -214,7 +216,6 @@ const cityRef=useRef();
             required
           ></input>
         </div>
-
 
         <button
           type="submit"

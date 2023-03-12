@@ -3,11 +3,11 @@ const Comment = require("../models/Comments");
 const Business = require("../models/Business");
 const User = require("../models/User");
 const verifyToken = require("../middleware/jwt");
-const { getComments, makeComment, deleteComment, editComment, likeComment, dislikeComment } = require("../controller/commentController");
+const { getComments, makeComment, deleteComment, editComment, likeComment, dislikeComment, getUserComments } = require("../controller/commentController");
 
 //get all comments
 router.get("/getcomments/:id", getComments);
-
+router.get("/getUsercomments/:id", getUserComments);
 //make comment
 router.post("/makecomment",verifyToken,makeComment);
 

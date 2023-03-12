@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import newRequest from "../utils/makerequest";
 const UserContext = React.createContext({
   user: {},
   userHandler: (userId) => {},
@@ -17,9 +18,7 @@ export const UserContextProvider = (props) => {
     }
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `http://localhost:8800/api/user/getUser/${userId}`
-      );
+      const response = await newRequest.get(`user/getUser/${userId}`);
       setUser(response.data);
       setIsLoading(false);
     } catch (error) {

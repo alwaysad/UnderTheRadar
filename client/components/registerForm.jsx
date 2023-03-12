@@ -5,7 +5,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const RegisterForm = (props) => {
   const [error, setError] = useState("");
-  const [color, setColor] = useState("text-red-500");
   const nameRef = useRef();
   const surNameRef = useRef();
   const userNameRef = useRef();
@@ -14,7 +13,6 @@ const RegisterForm = (props) => {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState("");
   const submitHandler = async (e) => {
     e.preventDefault();
     const enteredName = nameRef.current.value;

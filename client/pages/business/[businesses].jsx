@@ -2,7 +2,7 @@ import SingleBusiness from "../../components/singleBusinessCard";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useCallback } from "react";
-import axios from "axios";
+import newRequest from "../../utils/makerequest";
 
 const Businesses = (props) => {
   const router = useRouter();
@@ -10,13 +10,11 @@ const Businesses = (props) => {
   const { businesses } = router.query;
   const businessTypeFilter = useCallback(async () => {
     if (businesses === "allTypes") {
-      const response = await axios.get(
-        `http://localhost:8800/api/business/getAllBusiness`
-      );
+      const response = await newRequest.get(`business/getAllBusiness`);
       setBusiness(response.data);
     } else {
-      const response = await axios.get(
-        `http://localhost:8800/api/business/getAllBusiness?type=${businesses}`
+      const response = await newRequest.get(
+        `business/getAllBusiness?type=${businesses}`
       );
       setBusiness(response.data);
     }

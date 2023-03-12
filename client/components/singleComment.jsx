@@ -1,6 +1,4 @@
 import { useState, useCallback, useEffect, useContext } from "react";
-
-import axios from "axios";
 import StarIcon from "@mui/icons-material/Star";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -12,6 +10,9 @@ import AuthContext from "../context/authContext";
 import BusinessContext from "../context/businessContext";
 import CommentContext from "../context/commentContext";
 import { Avatar } from "@mui/material";
+import Link from "next/link";
+import newRequest from "../utils/makerequest";
+import getFormatDate from "../utils/formatDate";
 const SingleComment = ({
   text,
   userId,
@@ -30,9 +31,7 @@ const SingleComment = ({
   const businessCtx = useContext(BusinessContext);
 
   const getUser = useCallback(async () => {
-    const response = await axios.get(
-      `http://localhost:8800/api/user/getUser/${userId}`
-    );
+    const response = await newRequest.get(`user/getUser/${userId}`);
     setUser(response.data);
   }, [userId]);
 
@@ -73,17 +72,14 @@ const SingleComment = ({
   });
 
   const likeComment = async () => {
-    axios.defaults.withCredentials = true;
-    await axios.put(`http://localhost:8800/api/comment/like/${id}`, {
+    await newRequest.put(`comment/like/${id}`, {
       userId: authCtx.userId,
     });
     commentCtx.getComments(businessId);
   };
 
   const deleteComment = async () => {
-    axios.defaults.withCredentials = true;
-
-    await axios.delete(`http://localhost:8800/api/comment/delete/${id}`, {
+    await newRequest.delete(`comment/delete/${id}`, {
       data: {
         userId: authCtx.userId,
       },
@@ -92,8 +88,7 @@ const SingleComment = ({
   };
 
   const editComment = async () => {
-    axios.defaults.withCredentials = true;
-    await axios.delete(`http://localhost:8800/api/comment/edit/${id}`, {
+    await newRequest.delete(`comment/edit/${id}`, {
       data: {
         userId: authCtx.userId,
       },
@@ -101,41 +96,17 @@ const SingleComment = ({
   };
 
   const getFormattedDateDifference = (dateString) => {
-    const date = new Date(dateString);
-    const now = new Date();
-
-    const timeDiffInMs = now.getTime() - date.getTime();
-    const timeDiffInMinutes = Math.round(timeDiffInMs / (1000 * 60));
-    const timeDiffInHours = Math.round(timeDiffInMs / (1000 * 60 * 60));
-    const timeDiffInDays = Math.round(timeDiffInMs / (1000 * 60 * 60 * 24));
-
-    let formattedString = "";
-
-    if (timeDiffInDays >= 1) {
-      formattedString += `${timeDiffInDays} day${
-        timeDiffInDays > 1 ? "s" : ""
-      } `;
-    } else if (timeDiffInHours >= 1) {
-      formattedString += `${timeDiffInHours} hour${
-        timeDiffInHours > 1 ? "s" : ""
-      } `;
-    } else if (timeDiffInMinutes > 0) {
-      formattedString += `${timeDiffInMinutes} minute${
-        timeDiffInMinutes > 1 ? "s" : ""
-      } `;
-    } else {
-      formattedString = "just now";
-    }
-
+    const formattedString = getFormatDate(dateString);
     setTime(formattedString);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-4">
-        <span className="font-bold"> {user.username}</span>
-       
-       <Avatar src={user.img}/>
+        <Link className="flex flex-col space-y-4" href={`/profile/${user._id}`}>
+          <span className="font-bold"> {user.username}</span>
+          <Avatar src={user.img} />
+        </Link>
         <div className="flex space-x-2">
           {stars}
           <div className="border border-l-1"></div>

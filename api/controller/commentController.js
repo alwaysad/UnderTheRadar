@@ -11,6 +11,15 @@ const GetComments = async (req, res) => {
     res.status(500).json(error);
   }
 };
+const GetUserComments = async (req, res) => {
+  try {
+    const user= await User.findById(req.params.id);
+    const comments = await Comment.find({user:user._id.toString()});
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
 const Makecomment = async (req, res) => {
   try {
@@ -149,5 +158,6 @@ module.exports = {
   deleteComment: DeleteComment,
   editComment: EditComment,
   likeComment: LikeComment,
-  dislikeComment:DislikeComment
+  dislikeComment:DislikeComment,
+  getUserComments:GetUserComments
 };

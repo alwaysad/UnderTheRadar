@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/authContext";
 import { Avatar } from "@mui/material";
-import axios from "axios";
+
+import newRequest from "../utils/makerequest";
 const Navbar = () => {
   const authCtx = useContext(AuthContext);
   const userString = `/profile/${authCtx.userId}`;
@@ -13,9 +14,7 @@ const Navbar = () => {
     if (!userId) {
       return;
     }
-    const response = await axios.get(
-      `http://localhost:8800/api/user/getUser/${userId}`
-    );
+    const response = await newRequest.get(`user/getUser/${userId}`);
     setUser(response.data);
   };
   useEffect(() => {

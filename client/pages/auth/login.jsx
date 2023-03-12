@@ -1,9 +1,9 @@
-import axios from "axios";
 import LoginUser from "../../components/loginUser";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import BusinessLogin from "../../components/loginBusiness";
 import AuthContext from "../../context/authContext";
+import newRequest from "../../utils/makerequest";
 
 const Login = () => {
   const router = useRouter();
@@ -13,25 +13,21 @@ const Login = () => {
 
   const authCtx = useContext(AuthContext);
 
-  const loginHandler = async (loginCredentials) => {
+  const loginHandler = (loginCredentials) => {
     try {
-      await axios
-        .post("http://localhost:8800/api/auth/login/user", loginCredentials, {
-          withCredentials: true,
-        })
-        .then((response) => {
-          console.log(response.data);
-          router.push("/");
-          authCtx.onLogin(response.data.user._id);
-        });
+      newRequest.post("auth/login/user", loginCredentials).then((response) => {
+        console.log(response.data);
+        router.push("/");
+        authCtx.onLogin(response.data.user._id);
+      });
     } catch (error) {
       console.log(error);
     }
   };
-  const businessLoginHandler = async (loginCredentials) => {
+  const businessLoginHandler = (loginCredentials) => {
     try {
-      await axios
-        .post("http://localhost:8800/api/auth/login/business", loginCredentials)
+      newRequest
+        .post("auth/login/business", loginCredentials)
         .then((response) => {
           console.log(response.data);
           router.push("/");
@@ -45,7 +41,7 @@ const Login = () => {
     <div className="flex flex-col space-y-6 items-center justify-center min-h-screen bg-gray-400 ">
       {showButtons && (
         <>
-          {" "}
+    
           <button
             className="btn-primary w-4/12"
             onClick={() => {

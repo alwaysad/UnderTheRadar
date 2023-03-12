@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import newRequest from "../utils/makerequest";
 const BusinessContext = React.createContext({
   business: {},
   businessHandler: (businessId) => {},
@@ -17,8 +17,8 @@ export const BusinessContextProvider = (props) => {
     }
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `http://localhost:8800/api/business/getBusiness/${businessId}`
+      const response = await newRequest.get(
+        `business/getBusiness/${businessId}`
       );
       setBusiness(response.data);
       setIsLoading(false);

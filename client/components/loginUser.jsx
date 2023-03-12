@@ -31,7 +31,7 @@ const passwordRef=useRef();
         <label htmlFor="email" className="font-medium text-xl w-7/12">Email</label>
         <input className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
           type="email"
-          placeholder="Lütfen email giriniz"
+          placeholder="Please enter your email"
           onChange={email.handleChange}
           onBlur={email.blurHandler}
           pattern="^[^s@]+@[^s@]+.[^s@]+$"
@@ -43,7 +43,7 @@ const passwordRef=useRef();
         <label htmlFor="password" className="font-medium text-xl w-7/12">Password</label>
         <input className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
           type="password"
-          placeholder="Lütfen şifre giriniz"
+          placeholder="Please enter your password"
           ref={passwordRef}
         ></input>
         </div>

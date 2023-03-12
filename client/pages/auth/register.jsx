@@ -4,11 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import RegisterBusinessForm from "../../components/registerBusiness";
 
-import HikingIcon from '@mui/icons-material/Hiking';
-import BusinessIcon from '@mui/icons-material/Business';
-
-
-
+import HikingIcon from "@mui/icons-material/Hiking";
+import BusinessIcon from "@mui/icons-material/Business";
+import newRequest from "../../utils/makerequest";
 
 const Register = () => {
   const router = useRouter();
@@ -16,7 +14,7 @@ const Register = () => {
   const [isBusiness, setIsBusiness] = useState(false);
   const [showButtons, setshowButtons] = useState(true);
 
-  const onSubmitHandler = async (newUser) => {
+  const onSubmitHandler = (newUser) => {
     const user = {
       firstName: newUser.firstName,
       lastName: newUser.lastName,
@@ -24,35 +22,35 @@ const Register = () => {
       email: newUser.email,
       birthDate: newUser.birthDate,
       password: newUser.password,
-      img:newUser.img,
+      img: newUser.img,
     };
     try {
-      await axios
-        .post("http://localhost:8800/api/auth/register", user)
+      newRequest
+        .post("auth/register", user)
         .then((response) => {
           console.log(response.data);
-          router.push('/auth/login')
+          router.push("/auth/login");
         });
     } catch (error) {
       console.log(error.response.data);
     }
   };
-  const businessSubmitHandler = async (newBusiness) => {
+  const businessSubmitHandler =  (newBusiness) => {
     const business = {
       name: newBusiness.name,
       email: newBusiness.email,
       password: newBusiness.password,
       description: newBusiness.description,
       location: newBusiness.location,
-      businessType:newBusiness.type,
-      city:newBusiness.city
+      businessType: newBusiness.type,
+      city: newBusiness.city,
     };
     try {
-      await axios
-        .post("http://localhost:8800/api/auth/register/business", business)
+       newRequest
+        .post("auth/register/business", business)
         .then((response) => {
           console.log(response.data);
-          router.push('/auth/login')
+          router.push("/auth/login");
         });
     } catch (error) {
       console.log(error.response.data);
@@ -73,10 +71,10 @@ const Register = () => {
               setIsBusiness(false);
               setshowButtons(false);
             }}
-          > 
+          >
             <div className="flex items-center space-x-10">
-          <p>Personal Register </p>  
-            <HikingIcon fontSize="large"/>
+              <p>Personal Register </p>
+              <HikingIcon fontSize="large" />
             </div>
           </button>
           <button
@@ -87,9 +85,9 @@ const Register = () => {
               setshowButtons(false);
             }}
           >
-               <div className="flex items-center space-x-10">
-          <p>Business Register </p>  
-            <BusinessIcon fontSize="large"/>
+            <div className="flex items-center space-x-10">
+              <p>Business Register </p>
+              <BusinessIcon fontSize="large" />
             </div>
           </button>
         </div>

@@ -1,4 +1,4 @@
-import { LoremIpsum } from "react-lorem-ipsum";
+
 import StarIcon from "@mui/icons-material/Star";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

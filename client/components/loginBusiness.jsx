@@ -32,9 +32,6 @@ const BusinessLogin = (props) => {
           <input className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
             type="email"
             placeholder="Lütfen email giriniz"
-            // onChange={email.handleChange}
-            // onBlur={email.blurHandler}
-            // pattern="^[^s@]+@[^s@]+.[^s@]+$"
             ref={emailRef}
           ></input>
         </div>

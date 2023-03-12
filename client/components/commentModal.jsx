@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import axios from "axios";
 import AuthContext from "../context/authContext";
 import BusinessContext from "../context/businessContext";
+import newRequest from "../utils/makerequest";
 
 const CommentModal = ({ businessName, businessId, onClose }) => {
   const [enteredText, setEnteredText] = useState("");
@@ -19,9 +19,8 @@ const CommentModal = ({ businessName, businessId, onClose }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     onClose();
-    axios.defaults.withCredentials = true;
     console.log(businessId);
-    await axios.post("http://localhost:8800/api/comment/makecomment", {
+    await newRequest.post("comment/makecomment", {
       text: enteredText,
       rating: enteredRating,
       userId: authCtx.userId,
