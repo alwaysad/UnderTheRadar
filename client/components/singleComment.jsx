@@ -107,18 +107,23 @@ const SingleComment = ({
           <span className="font-bold"> {user.username}</span>
           <Avatar src={user.img} />
         </Link>
-        <div className="flex space-x-2">
-          {stars}
-          <div className="border border-l-1"></div>
-          <span className="font-light"> {time}</span>
+        <div className="flex justify-between">
+          <div className="flex space-x-2">
+            {stars}
+            <div className="border border-l-1"></div>
+            <span className="font-light"> {time}</span>
+          </div>
+          <div className="flex space-x-2">
+            {isUser && (
+              <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
+            )}
+            {isUser && (
+              <EditIcon className="cursor-pointer" onClick={editComment} />
+            )}
+          </div>
         </div>
         {text}
-        {isUser && (
-          <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
-        )}
-        {isUser && (
-          <EditIcon className="cursor-pointer" onClick={editComment} />
-        )}
+
         <div className="flex items-center space-x-2 ">
           <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
           <div>{like}</div>

@@ -25,7 +25,7 @@ const UserProfileComment = ({ comment }) => {
     await newRequest.put(`comment/like/${comment._id}`, {
       userId: authCtx.userId,
     });
-    commentCtx.getComments(businessId);
+    commentCtx.getComments(comment.business);
   };
 
   const deleteComment = async () => {
@@ -34,7 +34,8 @@ const UserProfileComment = ({ comment }) => {
         userId: authCtx.userId,
       },
     });
-    businessCtx.businessHandler(businessId); //businessId eklenecek
+    businessCtx.businessHandler(comment.business);
+    commentCtx.getUserComments(userCtx.user._id)         //businessId eklenecek
   };
 
   const editComment = async () => {
@@ -79,13 +80,14 @@ const UserProfileComment = ({ comment }) => {
   useEffect(() => {
     userVerification();
     getFormattedDateDifference(comment.createdAt);
+    businessCtx.businessHandler(comment.business);
   }, [userVerification, comment.createdAt]);
 
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-4">
         <span className="font-bold"> {userCtx.user.username}</span>
-
+        {businessCtx.business.name}
         <Avatar src={userCtx.user.img} />
         <div className="flex space-x-2">
           {stars}

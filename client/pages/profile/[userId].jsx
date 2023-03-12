@@ -16,12 +16,10 @@ const Profile = () => {
   const userCtx = useContext(UserContext);
   const commentCtx = useContext(CommentContext);
   const followHandler = async () => {
- 
     await newRequest.put(`user/follow/${userId}`);
     userCtx.userHandler(userId);
   };
   const unfollowHandler = async () => {
-   
     await newRequest.put(`user/unfollow/${userId}`);
     userCtx.userHandler(userId);
   };
@@ -85,8 +83,10 @@ const Profile = () => {
             </div>
           </div>
           <div>
+            <span>Comment Section</span>
+            {commentCtx.isLoading&&<LoopIcon className="animate-spin"/>}
             {!commentCtx.isLoading &&
-              commentCtx.usercomments.map((comment) => (  
+              commentCtx.usercomments.map((comment) => (
                 <UserProfileComment key={comment.text} comment={comment} />
               ))}
           </div>
