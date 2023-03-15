@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import SingleBusinessDetail from "../../components/singleBusinessDetails";
@@ -24,11 +23,7 @@ const BusinessDetail = () => {
         <SingleBusinessDetail
           id={businessId}
           business={businessCtx.business}
-          commentnumber={
-            businessCtx.business.comments
-              ? businessCtx.business.comments.length
-              : 0
-          }
+          commentnumber={businessCtx?.business.comments.length}
           comments={businessCtx.business.comments}
         />
       )}

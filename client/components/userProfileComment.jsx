@@ -19,9 +19,8 @@ const UserProfileComment = ({ comment }) => {
   const userCtx = useContext(UserContext);
   const commentCtx = useContext(CommentContext);
   const authCtx = useContext(AuthContext);
-  const businessCtx=useContext(BusinessContext);
+  const businessCtx = useContext(BusinessContext);
   const likeComment = async () => {
-   
     await newRequest.put(`comment/like/${comment._id}`, {
       userId: authCtx.userId,
     });
@@ -35,7 +34,7 @@ const UserProfileComment = ({ comment }) => {
       },
     });
     businessCtx.businessHandler(comment.business);
-    commentCtx.getUserComments(userCtx.user._id)         //businessId eklenecek
+    commentCtx.getUserComments(userCtx.user._id); //businessId eklenecek
   };
 
   const editComment = async () => {
