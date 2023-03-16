@@ -84,29 +84,34 @@ const UserProfileComment = ({ comment }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-2 justify-start mb-2">
         <span className="font-bold"> {userCtx.user.username}</span>
         {businessCtx.business.name}
         <Avatar src={userCtx.user.img} />
-        <div className="flex space-x-2">
-          {stars}
-          <div className="border border-l-1"></div>
-          <span className="font-light"> {time}</span>
+        <div className="flex justify-between">
+          <div className="flex space-x-2 ">
+            {stars}
+            <div className="border border-l-1"></div>
+            <span className="font-light"> {time}</span>
+          </div>
+          <div className="flex space-x-2">
+            {isUser && (
+              <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
+            )}
+            {isUser && (
+              <EditIcon className="cursor-pointer" onClick={editComment} />
+            )}
+          </div>
         </div>
-        {comment.text}
-        {isUser && (
-          <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
-        )}
-        {isUser && (
-          <EditIcon className="cursor-pointer" onClick={editComment} />
-        )}
-        <div className="flex items-center space-x-2 ">
-          <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
-          <div>{comment.like}</div>
-          <ThumbDownAltIcon className="cursor-pointer" />
-        </div>
-        <div className="border border-b-1"></div>
+        <span>{comment.text}</span>
       </div>
+
+      <div className="flex items-center space-x-2 ">
+        <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
+        <div>{comment.like}</div>
+        <ThumbDownAltIcon className="cursor-pointer" />
+      </div>
+      <div className="border border-b-1"></div>
     </ThemeProvider>
   );
 };

@@ -28,6 +28,7 @@ const Businesses = (props) => {
       <div className=" mt-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
         {business.map((business) => (
           <SingleBusiness
+            image={business.coverimg}
             id={business._id.toString()}
             key={business._id.toString()}
             name={business.name}

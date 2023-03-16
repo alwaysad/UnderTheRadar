@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import AuthContext from "../context/authContext";
 import BusinessContext from "../context/businessContext";
+import CommentContext from "../context/commentContext";
 import newRequest from "../utils/makerequest";
 
 const CommentModal = ({ businessName, businessId, onClose }) => {
@@ -8,6 +9,7 @@ const CommentModal = ({ businessName, businessId, onClose }) => {
   const [enteredRating, setEnteredRating] = useState(0);
   const authCtx = useContext(AuthContext);
   const businessCtx = useContext(BusinessContext);
+  const commmentCtx=useContext(CommentContext);
   const handleTextChange = (e) => {
     setEnteredText(e.target.value);
   };
@@ -27,6 +29,7 @@ const CommentModal = ({ businessName, businessId, onClose }) => {
       businessId: businessId,
     });
     businessCtx.businessHandler(businessId);
+    commmentCtx.getComments(businessId);  
   };
 
   return (

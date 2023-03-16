@@ -31,10 +31,15 @@ const BusinessSchema=new Schema({
        type:String,
        required:true
     },
-    images:{
-        type:Array,
-        default:[]
+    coverimg:{
+        type:String,
+        required:false,
+        default:''
     },
+    images:[{
+        type:String,
+        default:[]
+    }],
     level:{
         type:Number,
         enum:[1,2,3]

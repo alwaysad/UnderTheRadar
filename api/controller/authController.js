@@ -34,6 +34,7 @@ const BusinessRegister = async (req, res) => {
       description: req.body.description,
       businessType: req.body.businessType,
       city: req.body.city,
+      coverimg:req.body.img,
     });
 
     const newly = await newBusiness.save();

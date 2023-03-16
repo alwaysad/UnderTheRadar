@@ -1,4 +1,3 @@
-
 import StarIcon from "@mui/icons-material/Star";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -37,88 +36,57 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
     <StarIcon color="secondary" key={index} />
   ));
 
-  const fetchCommentDetails = () => {
-    if (!business._id) {
-      return;
-    }
-    commentCtx.getComments(business._id.toString());
-  };
-
-  useEffect(() => {
-    fetchCommentDetails();
-  }, [commentnumber]);
-
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex min-h-screen items-center justify-center my-20 px-10 md:px-20 lg:px-40">
-        <div className="flex flex-col space-y-4 max-w-2xl mx-auto">
-          <h1 className="font-bold text-4xl">{business.name}</h1>
-          <span className="font-medium text-2xl">About this business</span>
-          <div className="font-light text-xl">{business.description}</div>
-          {open && (
-            <Portal>
-              <CommentModal
-                onClose={closeHandler}
-                businessName={business.name}
-                businessId={business._id ? business._id.toString() : ""}
-              />
-            </Portal>
-          )}
-
-          <div className="border border-b-1"></div>
-          <div className="flex flex-col space-y-2 md:flex-row justify-between">
-            <div className="flex flex-col space-y-1">
-              <span className="font-light">Style</span>
-              <span className="">{business.businessType}</span>
-            </div>
-            <div className="flex flex-col space-y-1">
-              <span className="font-light">City</span>
-              <span className="">{business.city}</span>
-            </div>
-            <div className="flex flex-col space-y-1">
-              <span className="font-light">Contact</span>
-              <span className="">{business.email}</span>
-            </div>
-          </div>
-          <div className="flex flex-col space-y-1">
-            <span className="font-light">Address</span>
-            <span className="">{business.location}</span>
-          </div>
-
-          <div className="font-bold text-2xl">Reviews</div>
-          <div className="flex  flex-col space-y-1 md:flex-row md:space-x-8 md:space-y-0">
-            <div className="font-medium text-xl flex space-x-2 items-center">
-              <p>{commentnumber} reviews for this business</p>
-              {stars}
-              <span className="text-orange-400">
-                {business.rating ? business.rating.toFixed(1) : 0}
-              </span>
-            </div>
-            <button
-              onClick={openHandler}
-              className=" border hover:bg-green-400  hover:text-white border-gray-400 transition duration-150 rounded-lg px-4 py-4"
-            >
-              Add comment <AddCommentIcon />
-            </button>
-          </div>
-          {commentCtx.isLoading && (
-            <div className="">
-              <LoopIcon className="animate-spin" />
-            </div>
-          )}
-          {commentCtx.comments.map((comment) => (
-            <SingleComment
-              key={comment._id}
-              id={comment._id.toString()}
-              text={comment.text}
-              like={comment.like}
-              dislike={comment.dislike}
-              rating={comment.rating}
-              createdAt={comment.createdAt}
-              userId={comment.user}
+      <div className="flex flex-col space-y-4">
+        <h1 className="font-bold text-4xl">{business.name}</h1>
+        <span className="font-medium text-2xl">About this business</span>
+        <div className="font-light text-xl">{business.description}</div>
+        {open && (
+          <Portal>
+            <CommentModal
+              onClose={closeHandler}
+              businessName={business.name}
               businessId={business._id ? business._id.toString() : ""}
             />
-          ))}
+          </Portal>
+        )}
+
+        <div className="border border-b-1"></div>
+        <div className="flex flex-col space-y-2 md:flex-row justify-between">
+          <div className="flex flex-col space-y-1">
+            <span className="font-light">Style</span>
+            <span className="">{business.businessType}</span>
+          </div>
+          <div className="flex flex-col space-y-1">
+            <span className="font-light">City</span>
+            <span className="">{business.city}</span>
+          </div>
+          <div className="flex flex-col space-y-1">
+            <span className="font-light">Contact</span>
+            <span className="">{business.email}</span>
+          </div>
+        </div>
+        <div className="flex flex-col space-y-1">
+          <span className="font-light">Address</span>
+          <span className="">{business.location}</span>
+        </div>
+
+        <div className="font-bold text-2xl">Reviews</div>
+        <div className="flex  flex-col space-y-1 md:flex-row md:justify-between">
+          <div className="font-medium text-xl flex space-x-2 items-center">
+            <p>{commentnumber} reviews for this business</p>
+            {stars}
+            <span className="text-orange-400">
+              {business.rating ? business.rating.toFixed(1) : 0}
+            </span>
+          </div>
+          <button
+            onClick={openHandler}
+            className=" border hover:bg-green-400  hover:text-white border-gray-400 transition duration-150 rounded-lg px-4 py-4"
+          >
+            Add comment <AddCommentIcon />
+          </button>
         </div>
       </div>
     </ThemeProvider>

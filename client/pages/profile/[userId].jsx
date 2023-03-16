@@ -67,73 +67,74 @@ const Profile = () => {
         </div>
       )}
       {!userCtx.isLoading && (
-        <div className="flex items-center min-h-screen flex-col mt-40">
-          <Avatar src={userCtx.user.img} sx={{ width: 200, height: 200 }} />
-          <div className="flex space-x-1 md:space-x-1">
-            <span className="text-2xl">{userCtx.user.firstName}</span>
-            <span className="text-2xl">{userCtx.user.lastName}</span>
-          </div>
-          <p className="font-medium">@{userCtx.user.username}</p>
-          <div className="flex space-x-1 md:space-x-1">
-            <CakeIcon />
-            <p>
-              Birth Date: {new Date(userCtx.user.birthDate).getDate()}{" "}
-              {new Date(userCtx.user.birthDate).toLocaleString("default", {
-                month: "long",
-              })}
-            </p>
-          </div>
-          <div className="flex space-x-1 md:space-x-1">
-            <EmailIcon />
-            <p>{userCtx.user.email}</p>
-          </div>
-          {showButton && (
-            <div className="flex flex-col space-y-2 md:flex-row space-x-2 md:space-y-0">
-              {!isFollowing && (
-                <div className="flex space-x-1 md:space-x-1">
-                  <button
-                    onClick={followHandler}
-                    className="bg-blue-400 text-white rounded-lg px-2 py-2 max-w-md"
-                  >
-                    <PersonAddIcon />
-                    Follow
-                  </button>
-                </div>
-              )}
-              {isFollowing && (
-                <button
-                  onClick={unfollowHandler}
-                  className="bg-blue-400 text-white rounded-lg px-2 py-2 max-w-md justify-center items-center "
-                >
-                  
-                  <div className="flex space-x-5 md:space-x-5">
-                    <PersonRemoveIcon />
-                    Unfollow
+        <div className=" mx-20 my-20 flex flex-col  space-y-2  md:flex-row md:space-x-2 md:space-y-0 ">
+          <div className="bg-gray-400  flex flex-col items-center w-1/5  pt-20 px-20  ">
+            <Avatar src={userCtx.user.img} sx={{ width: 200, height: 200 }} />
+            <div className="flex space-x-1 md:space-x-1">
+              <span className="text-2xl">{userCtx.user.firstName}</span>
+              <span className="text-2xl">{userCtx.user.lastName}</span>
+            </div>
+            <p className="font-medium">@{userCtx.user.username}</p>
+            <div className="flex space-x-1 md:space-x-1">
+              <CakeIcon />
+              <p>
+                Birth Date: {new Date(userCtx.user.birthDate).getDate()}{" "}
+                {new Date(userCtx.user.birthDate).toLocaleString("default", {
+                  month: "long",
+                })}
+              </p>
+            </div>
+            <div className="flex space-x-1 md:space-x-1">
+              <EmailIcon />
+              <p>{userCtx.user.email}</p>
+            </div>
+            {showButton && (
+              <div className="flex flex-col space-y-2 md:flex-row space-x-2 md:space-y-0">
+                {!isFollowing && (
+                  <div className="flex space-x-1 md:space-x-1">
+                    <button
+                      onClick={followHandler}
+                      className="bg-blue-400 text-white rounded-lg px-2 py-2 max-w-md"
+                    >
+                      <PersonAddIcon />
+                      Follow
+                    </button>
                   </div>
-                </button>
-              )}
+                )}
+                {isFollowing && (
+                  <button
+                    onClick={unfollowHandler}
+                    className="bg-blue-400 text-white rounded-lg px-2 py-2 max-w-md justify-center items-center "
+                  >
+                    <div className="flex space-x-5 md:space-x-5">
+                      <PersonRemoveIcon />
+                      Unfollow
+                    </div>
+                  </button>
+                )}
+              </div>
+            )}
+            <div>
+              <span>Followers:</span>
+              <div className="flex ">
+                {userCtx.user.followers &&
+                  userCtx.user.followers.map((follower) => (
+                    <Follower key={follower} id={follower} />
+                  ))}
+              </div>
             </div>
-          )}
-          <div>
-            <span>Followers:</span>
-            <div className="flex ">
-              {userCtx.user.followers &&
-                userCtx.user.followers.map((follower) => (
-                  <Follower key={follower} id={follower} />
-                ))}
+            <div>
+              <span>Followings:</span>
+              <div className="flex ">
+                {userCtx.user.followings &&
+                  userCtx.user.followings.map((followings) => (
+                    <Follower key={followings} id={followings} />
+                  ))}
+              </div>
             </div>
           </div>
-          <div>
-            <span>Followings:</span>
-            <div className="flex ">
-              {userCtx.user.followings &&
-                userCtx.user.followings.map((followings) => (
-                  <Follower key={followings} id={followings} />
-                ))}
-            </div>
-          </div>
-          <div>
-            <span>Comment Section</span>
+          <div className="bg-gray-200 items-center justify-center w-4/5  pt-20 px-20 ">
+            <span className="font-bold text-3xl mb-10 flex justify-center">Comment section</span>
             {commentCtx.isLoading && <LoopIcon className="animate-spin" />}
             {!commentCtx.isLoading &&
               commentCtx.usercomments.map((comment) => (

@@ -23,7 +23,7 @@ const theme = createTheme({
 const SingleBusiness = ({
   name,
   description,
-  
+  image,
   city,
   rating,
   commentNumber,
@@ -46,7 +46,7 @@ const SingleBusiness = ({
           className="rounded-lg border group  border-teal-800 shadow-lg w-72 outline-none overflow-hidden"
           style={{ height: "360px" }}
         >
-          <Image src="/stock.jpg" alt="business" width={600} height={600} />
+          <Image src={image} alt="business" width={600} height={600} />
           <div className="flex  flex-col justify-start space-y-2 py-4 px-4">
             <div className="flex  justify-start space-x-3">
               <PlaceIcon />

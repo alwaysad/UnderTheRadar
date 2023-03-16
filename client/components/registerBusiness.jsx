@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import useInputValidate from "./customhooks/useinputValidate";
-
+import { storage } from "../firebase/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const RegisterBusinessForm = (props) => {
   const options = [
     "Restaurant",
@@ -11,6 +12,7 @@ const RegisterBusinessForm = (props) => {
     "Accomadation",
   ];
 
+  const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const nameRef = useRef();
   const emailRef = useRef();
@@ -35,6 +37,14 @@ const RegisterBusinessForm = (props) => {
       console.log("Password doesnt match");
       return;
     }
+
+    const imageRef = ref(storage, enteredName);
+    await uploadBytes(imageRef, file);
+  
+    const url = await getDownloadURL(imageRef);
+
+
+
     const business = {
       name: enteredName,
       email: enteredMail,
@@ -43,6 +53,7 @@ const RegisterBusinessForm = (props) => {
       location: enteredLocation,
       type: enteredType,
       city: enteredCity,
+      img:url,
     };
     props.onSubmitHandler(business);
   };
@@ -134,6 +145,24 @@ const RegisterBusinessForm = (props) => {
             pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
           ></input>
         </div>
+
+        <div className="flex space-x-4 md:space-x-6 items-center">
+          <label
+            htmlFor="image"
+            className="font-medium text-xl md:text-2xl w-7/12"
+          >
+            Cover image
+          </label>
+          <input
+            className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
+            type="file"
+            placeholder="Enter your username"
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+            }}
+          ></input>
+        </div>
+
         <div className="flex space-x-4 md:space-x-6 items-center">
           <label
             htmlFor="password"

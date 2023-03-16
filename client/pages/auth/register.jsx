@@ -44,6 +44,7 @@ const Register = () => {
       location: newBusiness.location,
       businessType: newBusiness.type,
       city: newBusiness.city,
+      img:newBusiness.img,
     };
     try {
        newRequest

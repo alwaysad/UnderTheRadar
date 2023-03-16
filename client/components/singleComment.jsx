@@ -48,7 +48,7 @@ const SingleComment = ({
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, [userId]);
 
   useEffect(() => {
     userVerification();
@@ -85,6 +85,7 @@ const SingleComment = ({
       },
     });
     businessCtx.businessHandler(businessId);
+    commentCtx.getComments(businessId); 
   };
 
   const editComment = async () => {
@@ -93,6 +94,8 @@ const SingleComment = ({
         userId: authCtx.userId,
       },
     });
+
+    commentCtx.getComments(businessId); 
   };
 
   const getFormattedDateDifference = (dateString) => {
