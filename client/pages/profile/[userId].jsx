@@ -134,11 +134,13 @@ const Profile = () => {
             </div>
           </div>
           <div className="bg-gray-200 items-center justify-center w-4/5  pt-20 px-20 ">
-            <span className="font-bold text-3xl mb-10 flex justify-center">Comment section</span>
+            <span className="font-bold text-3xl mb-10 flex justify-center">
+              Comment section
+            </span>
             {commentCtx.isLoading && <LoopIcon className="animate-spin" />}
             {!commentCtx.isLoading &&
               commentCtx.usercomments.map((comment) => (
-                <UserProfileComment key={comment.text} comment={comment} />
+                <UserProfileComment key={comment._id} comment={comment} />
               ))}
           </div>
         </div>

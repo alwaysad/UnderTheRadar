@@ -15,7 +15,7 @@ const Register = async (req, res) => {
       password: hashedPassword,
       email: req.body.email,
       birthDate: req.body.birthDate,
-      img:req.body.img
+      img: req.body.img,
     });
     const newUser = await user.save();
     res.status(200).json("registered succesfully");
@@ -34,7 +34,8 @@ const BusinessRegister = async (req, res) => {
       description: req.body.description,
       businessType: req.body.businessType,
       city: req.body.city,
-      coverimg:req.body.img,
+      coverimg: req.body.img,
+      images: req.body.businessImages,
     });
 
     const newly = await newBusiness.save();

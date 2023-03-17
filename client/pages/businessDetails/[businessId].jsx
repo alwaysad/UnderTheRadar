@@ -33,7 +33,8 @@ const BusinessDetail = () => {
         )}
         {!businessCtx.isLoading && (
           <SingleBusinessDetail
-            id={businessId}
+        
+            id={businessCtx.business._id}
             business={businessCtx.business}
             commentnumber={businessCtx?.business.comments.length}
             comments={businessCtx.business.comments}

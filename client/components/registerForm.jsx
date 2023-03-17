@@ -22,17 +22,17 @@ const RegisterForm = (props) => {
     const enteredBirthDate = birthDateRef.current.value;
     const enteredPassword = passwordRef.current.value;
     const enteredConfirmPassword = confirmPasswordRef.current.value;
-  
+
     if (enteredPassword !== enteredConfirmPassword) {
       console.log("Password doesnt match");
       return;
     }
-  
+
     const imageRef = ref(storage, entereduserName);
     await uploadBytes(imageRef, file);
-  
+
     const url = await getDownloadURL(imageRef);
-  
+
     const user = {
       firstName: enteredName,
       lastName: enteredSurName,
@@ -42,7 +42,7 @@ const RegisterForm = (props) => {
       email: enteredMail,
       img: url,
     };
-  
+
     props.onSubmitHandler(user);
   };
 
@@ -126,7 +126,10 @@ const RegisterForm = (props) => {
           ></input>
         </div>
         <div className="flex space-x-4 md:space-x-6 items-center">
-          <p className="font-medium text-xl md:text-2xl w-7/12"> Profile picture</p>
+          <p className="font-medium text-xl md:text-2xl w-7/12">
+            {" "}
+            Profile picture
+          </p>
           <input
             className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
             type="file"

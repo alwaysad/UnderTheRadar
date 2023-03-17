@@ -22,6 +22,9 @@ const RegisterBusinessForm = (props) => {
   const locationRef = useRef();
   const typeRef = useRef();
   const cityRef = useRef();
+
+  const [businessImages, setBusinessImages] = useState([]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     const enteredName = nameRef.current.value;
@@ -38,12 +41,21 @@ const RegisterBusinessForm = (props) => {
       return;
     }
 
+    const imageRefs = [];
+    const urls = [];
+
+    for (let i = 0; i < businessImages.length; i++) {
+      const imageRef = ref(storage, `${enteredName}-${i}`);
+      await uploadBytes(imageRef, businessImages[i]);
+      imageRefs.push(imageRef);
+      const url = await getDownloadURL(imageRef);
+      urls.push(url);
+    }
+
     const imageRef = ref(storage, enteredName);
     await uploadBytes(imageRef, file);
-  
+
     const url = await getDownloadURL(imageRef);
-
-
 
     const business = {
       name: enteredName,
@@ -53,7 +65,8 @@ const RegisterBusinessForm = (props) => {
       location: enteredLocation,
       type: enteredType,
       city: enteredCity,
-      img:url,
+      img: url,
+      businessImages: urls,
     };
     props.onSubmitHandler(business);
   };
@@ -159,6 +172,23 @@ const RegisterBusinessForm = (props) => {
             placeholder="Enter your username"
             onChange={(e) => {
               setFile(e.target.files[0]);
+            }}
+          ></input>
+        </div>
+        <div className="flex space-x-4 md:space-x-6 items-center">
+          <label
+            htmlFor="image"
+            className="font-medium text-xl md:text-2xl w-7/12"
+          >
+            Business Images
+          </label>
+          <input
+            className="px-3 py-3 md:px-6 rounded-lg outline-none border border-black"
+            type="file"
+            multiple
+            placeholder="Enter your username"
+            onChange={(e) => {
+              setBusinessImages(e.target.files);
             }}
           ></input>
         </div>

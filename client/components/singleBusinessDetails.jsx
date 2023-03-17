@@ -2,12 +2,13 @@ import StarIcon from "@mui/icons-material/Star";
 import { purple } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useContext, useEffect, useState } from "react";
-import SingleComment from "./singleComment";
 import AddCommentIcon from "@mui/icons-material/AddComment";
 import Portal from "./modals/commentModal";
 import CommentModal from "./commentModal";
 import CommentContext from "../context/commentContext";
-import LoopIcon from "@mui/icons-material/Loop";
+import Image from "next/image";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 const theme = createTheme({
   palette: {
     primary: {
@@ -23,8 +24,15 @@ const theme = createTheme({
 
 const SingleBusinessDetail = ({ business, commentnumber }) => {
   const [open, setOpen] = useState(false);
+  const [curr, setCurr] = useState(0);
 
-  const commentCtx = useContext(CommentContext);
+  const prev = () => {
+    setCurr((curr) => (curr === 0 ? business.images.length - 1 : curr - 1));
+  };
+  const next = () => {
+    setCurr((curr) => (curr === business.images.length - 1 ? 0 : curr + 1));
+  };
+
   const openHandler = () => {
     setOpen(true);
   };
@@ -70,6 +78,43 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
         <div className="flex flex-col space-y-1">
           <span className="font-light">Address</span>
           <span className="">{business.location}</span>
+        </div>
+
+        <div className="ml-40 relative overflow-hidden max-w-md">
+          <div
+            className="flex transition-transform ease-out duration-500"
+            style={{ transform: `translateX(-${curr * 100}%)` }}
+          >
+            {business.images.map((image) => (
+              <Image src={image} width={500} height={500} />
+            ))}
+          </div>
+          <div className="flex absolute inset-0 items-center justify-between p-4">
+            <button
+              onClick={prev}
+              className=" bg-gray-300 hover:bg-white rounded-full"
+            >
+              <ChevronLeftIcon />
+            </button>
+            <button
+              onClick={next}
+              className="bg-gray-300 hover:bg-white rounded-full"
+            >
+              <ChevronRightIcon />
+            </button>
+          </div>
+
+          <div className="absolute bottom-4 right-0 left-0">
+            <div className="flex items-center justify-center gap-2">
+              {business.images.map((_, i) => (
+                <div
+                  className={`transition-all w-2 h-2 bg-white rounded-full ${
+                    curr === i ? "p-1.5" : "bg-opacity-50"
+                  }`}
+                ></div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="font-bold text-2xl">Reviews</div>

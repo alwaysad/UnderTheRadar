@@ -20,11 +20,13 @@ const UserProfileComment = ({ comment }) => {
   const commentCtx = useContext(CommentContext);
   const authCtx = useContext(AuthContext);
   const businessCtx = useContext(BusinessContext);
+  const [business, setBusiness] = useState({});
   const likeComment = async () => {
     await newRequest.put(`comment/like/${comment._id}`, {
       userId: authCtx.userId,
     });
-    commentCtx.getComments(comment.business);
+    commentCtx.getUserComments(userCtx.user._id);
+    businessCtx.businessHandler(comment.business);
   };
 
   const deleteComment = async () => {
@@ -79,14 +81,28 @@ const UserProfileComment = ({ comment }) => {
   useEffect(() => {
     userVerification();
     getFormattedDateDifference(comment.createdAt);
-    businessCtx.businessHandler(comment.business);
   }, [userVerification, comment.createdAt]);
+
+  const getBusiness = async (businessId) => {
+    try {
+      const response = await newRequest.get(
+        `/business/getBusiness/${businessId}`
+      );
+      setBusiness(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getBusiness(comment.business);
+  }, [comment.business]);
 
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-2 justify-start mb-2">
-        <span className="font-bold"> {userCtx.user.username}</span>
-        {businessCtx.business.name}
+        <span className="font-bold"> {`${userCtx.user.username}>>${business.name}`}</span>
+        
         <Avatar src={userCtx.user.img} />
         <div className="flex justify-between">
           <div className="flex space-x-2 ">
