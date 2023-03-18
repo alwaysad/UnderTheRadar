@@ -4,8 +4,8 @@ const Business = require("../models/Business");
 
 const GetComments = async (req, res) => {
   try {
-    const business= await Business.findById(req.params.id);
-    const comments = await Comment.find({business:business._id.toString()});
+    const business = await Business.findById(req.params.id);
+    const comments = await Comment.find({ business: business._id.toString() });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json(error);
@@ -13,8 +13,8 @@ const GetComments = async (req, res) => {
 };
 const GetUserComments = async (req, res) => {
   try {
-    const user= await User.findById(req.params.id);
-    const comments = await Comment.find({user:user._id.toString()});
+    const user = await User.findById(req.params.id);
+    const comments = await Comment.find({ user: user._id.toString() });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json(error);
@@ -60,27 +60,35 @@ const DeleteComment = async (req, res) => {
       : false;
     if (user._id.toString() === req.body.userId) {
       if (exist) {
-       
         await Comment.findByIdAndDelete(req.params.id);
         const remainingComments = await Comment.find({ business: business });
-        const totalRating = remainingComments.reduce((acc, cur) => acc + cur.rating, 0);
-        const newRating = remainingComments.length > 0 ? totalRating / remainingComments.length : 0;
+        const totalRating = remainingComments.reduce(
+          (acc, cur) => acc + cur.rating,
+          0
+        );
+        const newRating =
+          remainingComments.length > 0
+            ? totalRating / remainingComments.length
+            : 0;
         await Business.findByIdAndUpdate(business, {
           $pull: { comments: req.params.id },
-          $set:{rating:newRating}
-       
+          $set: { rating: newRating },
         });
         await User.findByIdAndUpdate(user, {
           $pull: { comments: req.params.id },
         });
-        res.status(200).json({newrating:newRating,totalRating:totalRating});
+        res
+          .status(200)
+          .json({ newrating: newRating, totalRating: totalRating });
       } else {
         res.status(404).json("Comment doesnt exist");
       }
     } else {
-      res
-        .status(404)
-        .json({ message: "You can not delete other person comment", user:user._id.toString(), gönderen:req.body.userId });
+      res.status(404).json({
+        message: "You can not delete other person comment",
+        user: user._id.toString(),
+        gönderen: req.body.userId,
+      });
     }
   } catch (error) {
     res.status(500).json(error);
@@ -107,7 +115,7 @@ const EditComment = async (req, res) => {
         res.status(404).json("Comment doesnt exist");
       }
     } else {
-      res.status(404).json({ message: "You can edit only your account" });
+      res.status(404).json({ message: "You can edit only your account",gonderen:req.body.userId });
     }
   } catch (error) {
     res.status(500).json(error);
@@ -134,7 +142,7 @@ const LikeComment = async (req, res) => {
   }
 };
 
-const DislikeComment=async (req, res) => {
+const DislikeComment = async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.id);
     const user = await User.findById(req.body.userId);
@@ -150,7 +158,7 @@ const DislikeComment=async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-}
+};
 
 module.exports = {
   getComments: GetComments,
@@ -158,6 +166,6 @@ module.exports = {
   deleteComment: DeleteComment,
   editComment: EditComment,
   likeComment: LikeComment,
-  dislikeComment:DislikeComment,
-  getUserComments:GetUserComments
+  dislikeComment: DislikeComment,
+  getUserComments: GetUserComments,
 };

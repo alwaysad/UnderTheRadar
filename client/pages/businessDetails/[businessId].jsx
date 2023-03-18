@@ -24,16 +24,11 @@ const BusinessDetail = () => {
   }, [businessId]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center mt-10">
+    <div className="flex min-h-screen justify-center mt-10">
       <div className="flex flex-col max-w-5xl w-full px-10 md:px-20 lg:px-40">
-        {businessCtx.isLoading && (
-          <div className="flex items-center justify-center min-h-screen">
-            <LoopIcon className="animate-spin" />
-          </div>
-        )}
+        {businessCtx.isLoading && <LoopIcon className="animate-spin" />}
         {!businessCtx.isLoading && (
           <SingleBusinessDetail
-        
             id={businessCtx.business._id}
             business={businessCtx.business}
             commentnumber={businessCtx?.business.comments.length}

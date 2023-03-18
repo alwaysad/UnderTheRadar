@@ -4,12 +4,20 @@ import BusinessContext from "../context/businessContext";
 import CommentContext from "../context/commentContext";
 import newRequest from "../utils/makerequest";
 
-const EditModal = ({ businessName, businessId, onClose }) => {
+const EditModal = ({
+  businessName,
+  businessId,
+  onClose,
+  comment,
+  rating,
+  id,
+}) => {
   const [enteredText, setEnteredText] = useState("");
   const [enteredRating, setEnteredRating] = useState(0);
   const authCtx = useContext(AuthContext);
+
   const businessCtx = useContext(BusinessContext);
-  const commmentCtx = useContext(CommentContext);
+  const commentCtx = useContext(CommentContext);
   const handleTextChange = (e) => {
     setEnteredText(e.target.value);
   };
@@ -22,14 +30,12 @@ const EditModal = ({ businessName, businessId, onClose }) => {
     e.preventDefault();
     onClose();
     console.log(businessId);
-    await newRequest.post("comment/makecomment", {
+    await newRequest.put(`comment/edit/${id}`, {
+      userId: authCtx.userId,
       text: enteredText,
       rating: enteredRating,
-      userId: authCtx.userId,
-      businessId: businessId,
     });
-    businessCtx.businessHandler(businessId);
-    commmentCtx.getComments(businessId);
+    commentCtx.getComments(businessId);
   };
 
   return (
@@ -43,20 +49,19 @@ const EditModal = ({ businessName, businessId, onClose }) => {
                 className="px-4 py-8 border-black border-2 rounded-md outline-none break-all"
                 type="text"
                 onChange={handleTextChange}
-                placeholder="Your comment"
+                placeholder={comment}
               ></input>
               <input
                 className="px-2 py-2 border-black border-2 rounded-md outline-none"
                 type="number"
                 onChange={handleRatingChange}
-                placeholder="Your rating"
+                placeholder={rating}
               ></input>
               <button
                 className="border rounded-lg py-2 border-black overflow-hidden bg-black text-white hover:text-green-400 duration-150"
                 type="submit"
               >
                 Submit
-                
               </button>
             </div>
           </form>

@@ -60,15 +60,15 @@ const Profile = () => {
   }, [userCtx.user.followers]);
 
   return (
-    <div>
+    <div className="min-h-screen bg-teal-50 ">
       {userCtx.isLoading && (
-        <div className="flex items-center justify-center min-h-screen ">
+        <div className="">
           <LoopIcon className="animate-spin" />
         </div>
       )}
       {!userCtx.isLoading && (
-        <div className=" mx-20 my-20 flex flex-col  space-y-2  md:flex-row md:space-x-2 md:space-y-0 ">
-          <div className="bg-gray-400  flex flex-col items-center w-1/5  pt-20 px-20  ">
+        <div className=" mx-auto mt-10 flex  flex-col max-w-7xl gap-4 px-10 md:flex-row  ">
+          <div className=" bg-gray-200 h-4/5  flex flex-col items-center  max-w-2xl py-10 px-20 ">
             <Avatar src={userCtx.user.img} sx={{ width: 200, height: 200 }} />
             <div className="flex space-x-1 md:space-x-1">
               <span className="text-2xl">{userCtx.user.firstName}</span>
@@ -133,7 +133,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-200 items-center justify-center w-4/5  pt-20 px-20 ">
+          <div className="bg-gray-200 items-center justify-center max-w-4xl w-full pt-10 px-10 ">
             <span className="font-bold text-3xl mb-10 flex justify-center">
               Comment section
             </span>

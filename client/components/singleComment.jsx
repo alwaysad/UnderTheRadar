@@ -13,6 +13,8 @@ import { Avatar } from "@mui/material";
 import Link from "next/link";
 import newRequest from "../utils/makerequest";
 import getFormatDate from "../utils/formatDate";
+import EditModal from "./editModal";
+import Portal from "./modals/commentModal";
 const SingleComment = ({
   text,
   userId,
@@ -25,6 +27,7 @@ const SingleComment = ({
 }) => {
   const [user, setUser] = useState({});
   const [time, setTime] = useState("");
+  const [open, setOpen] = useState(false);
   const [isUser, setIsUser] = useState(false);
   const authCtx = useContext(AuthContext);
   const commentCtx = useContext(CommentContext);
@@ -78,6 +81,13 @@ const SingleComment = ({
     commentCtx.getComments(businessId);
   };
 
+  const dislikeComment = async () => {
+    await newRequest.put(`comment/dislike/${id}`, {
+      userId: authCtx.userId,
+    });
+    commentCtx.getComments(businessId);
+  };
+
   const deleteComment = async () => {
     await newRequest.delete(`comment/delete/${id}`, {
       data: {
@@ -85,17 +95,16 @@ const SingleComment = ({
       },
     });
     businessCtx.businessHandler(businessId);
-    commentCtx.getComments(businessId); 
+    commentCtx.getComments(businessId);
   };
 
-  const editComment = async () => {
-    await newRequest.delete(`comment/edit/${id}`, {
-      data: {
-        userId: authCtx.userId,
-      },
-    });
+  
 
-    commentCtx.getComments(businessId); 
+  const openHandler = () => {
+    setOpen(true);
+  };
+  const closeHandler = () => {
+    setOpen(false);
   };
 
   const getFormattedDateDifference = (dateString) => {
@@ -105,7 +114,7 @@ const SingleComment = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-4 shadow-sm">
         <Link className="flex flex-col space-y-4" href={`/profile/${user._id}`}>
           <span className="font-bold"> {user.username}</span>
           <Avatar src={user.img} />
@@ -121,16 +130,30 @@ const SingleComment = ({
               <DeleteIcon className="cursor-pointer" onClick={deleteComment} />
             )}
             {isUser && (
-              <EditIcon className="cursor-pointer" onClick={editComment} />
+              <EditIcon className="cursor-pointer" onClick={openHandler} />
             )}
           </div>
         </div>
         {text}
-
+        {open && (
+          <Portal>
+            <EditModal
+              onClose={closeHandler}
+              businessName={businessCtx.business.name}
+              businessId={businessCtx.business._id ? businessCtx.business._id.toString() : ""}
+              comment={text}
+              rating={rating}
+              id={id}
+            />
+          </Portal>
+        )}
         <div className="flex items-center space-x-2 ">
           <ThumbUpIcon className="cursor-pointer" onClick={likeComment} />
           <div>{like}</div>
-          <ThumbDownAltIcon className="cursor-pointer" />
+          <ThumbDownAltIcon
+            onClick={dislikeComment}
+            className="cursor-pointer"
+          />
         </div>
         <div className="border border-b-1"></div>
       </div>

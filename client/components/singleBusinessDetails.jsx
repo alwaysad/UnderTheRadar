@@ -47,9 +47,10 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-4">
-        <h1 className="font-bold text-4xl">{business.name}</h1>
-        <span className="font-medium text-2xl">About this business</span>
-        <div className="font-light text-xl">{business.description}</div>
+        
+        <h1 className="font-bold text-4xl text-center md:text-left">{business.name}</h1>
+      
+        <div className="font-light text-2xl max-w-2xl">{business.description}</div>
         {open && (
           <Portal>
             <CommentModal
