@@ -21,7 +21,7 @@ const SingleComment = ({
   createdAt,
   rating,
   like,
-  dislike,
+  
   id,
   businessId,
 }) => {
@@ -98,8 +98,6 @@ const SingleComment = ({
     commentCtx.getComments(businessId);
   };
 
-  
-
   const openHandler = () => {
     setOpen(true);
   };
@@ -140,7 +138,11 @@ const SingleComment = ({
             <EditModal
               onClose={closeHandler}
               businessName={businessCtx.business.name}
-              businessId={businessCtx.business._id ? businessCtx.business._id.toString() : ""}
+              businessId={
+                businessCtx.business._id
+                  ? businessCtx.business._id.toString()
+                  : ""
+              }
               comment={text}
               rating={rating}
               id={id}

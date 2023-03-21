@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useCallback } from "react";
 import newRequest from "../../utils/makerequest";
-
+import Head from "next/head";
 const Businesses = (props) => {
   const router = useRouter();
   const [business, setBusiness] = useState([]);
@@ -25,6 +25,11 @@ const Businesses = (props) => {
 
   return (
     <div className="flex justify-center mt-10 min-h-screen">
+      <Head>
+        <title>
+          {businesses === "allTypes" ? "All businesses" : businesses}
+        </title>
+      </Head>
       <div className=" mt-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 ">
         {business.map((business) => (
           <SingleBusiness

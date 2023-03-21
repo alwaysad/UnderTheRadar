@@ -5,7 +5,9 @@ const Business = require("../models/Business");
 const GetComments = async (req, res) => {
   try {
     const business = await Business.findById(req.params.id);
-    const comments = await Comment.find({ business: business._id.toString() });
+    const comments = await Comment.find({ business: business._id.toString() })
+      .populate({ path: "user", model: "User" })
+      .populate({ path: "business", model: "Business" });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json(error);
@@ -14,7 +16,8 @@ const GetComments = async (req, res) => {
 const GetUserComments = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    const comments = await Comment.find({ user: user._id.toString() });
+    const comments = await Comment.find({ user: user._id.toString() }).populate({ path: "user", model: "User" })
+    .populate({ path: "business", model: "Business" });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json(error);
@@ -115,7 +118,10 @@ const EditComment = async (req, res) => {
         res.status(404).json("Comment doesnt exist");
       }
     } else {
-      res.status(404).json({ message: "You can edit only your account",gonderen:req.body.userId });
+      res.status(404).json({
+        message: "You can edit only your account",
+        gonderen: req.body.userId,
+      });
     }
   } catch (error) {
     res.status(500).json(error);

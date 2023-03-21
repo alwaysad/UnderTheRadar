@@ -47,7 +47,7 @@ export const CommentContextProvider = (props) => {
       );
       setUserComments(response.data);
       setIsLoading(false);
-      console.log(response.data);
+      
     } catch (error) {
       setError(error);
     }

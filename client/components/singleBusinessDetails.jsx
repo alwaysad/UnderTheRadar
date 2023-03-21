@@ -47,10 +47,13 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-4">
-        
-        <h1 className="font-bold text-4xl text-center md:text-left">{business.name}</h1>
-      
-        <div className="font-light text-2xl max-w-2xl">{business.description}</div>
+        <h1 className="font-bold text-4xl text-center md:text-left">
+          {business.name}
+        </h1>
+
+        <div className="font-light text-2xl max-w-2xl">
+          {business.description}
+        </div>
         {open && (
           <Portal>
             <CommentModal
@@ -81,13 +84,13 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
           <span className="">{business.location}</span>
         </div>
 
-        <div className="ml-40 relative overflow-hidden max-w-md">
+        <div className=" sm:ml-40 relative overflow-hidden max-w-md ">
           <div
             className="flex transition-transform ease-out duration-500"
             style={{ transform: `translateX(-${curr * 100}%)` }}
           >
             {business.images.map((image) => (
-              <Image src={image} width={500} height={500} />
+              <Image src={image} width={500} height={500} key={image} alt={image}  />
             ))}
           </div>
           <div className="flex absolute inset-0 items-center justify-between p-4">

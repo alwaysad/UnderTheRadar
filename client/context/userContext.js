@@ -17,6 +17,7 @@ export const UserContextProvider = (props) => {
       return;
     }
     setIsLoading(true);
+    console.log(userId);
     try {
       const response = await newRequest.get(`user/getUser/${userId}`);
       setUser(response.data);

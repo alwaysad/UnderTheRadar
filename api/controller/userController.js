@@ -1,8 +1,13 @@
 const User = require("../models/User");
-
+const Comment = require("../models/Comments");
+const { populate } = require("../models/User");
 const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id)
+      .populate("followings")
+      .populate("followers")
+      .populate({ path: "comments", populate: { path: "user" } })
+      .populate({ path: "comments", populate: { path: "business" } });
     if (!user) {
       throw new Error("there is no user with given details");
     }

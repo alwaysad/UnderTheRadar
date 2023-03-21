@@ -5,6 +5,7 @@ import BusinessContext from "../../context/businessContext";
 import LoopIcon from "@mui/icons-material/Loop";
 import CommentContext from "../../context/commentContext";
 import SingleComment from "../../components/singleComment";
+import Head from "next/head";
 
 const BusinessDetail = () => {
   const router = useRouter();
@@ -25,6 +26,9 @@ const BusinessDetail = () => {
 
   return (
     <div className="flex min-h-screen justify-center mt-10">
+      <Head>
+        <title>{businessCtx.business.name}</title>
+      </Head>
       <div className="flex flex-col max-w-5xl w-full px-10 md:px-20 lg:px-40">
         {businessCtx.isLoading && <LoopIcon className="animate-spin" />}
         {!businessCtx.isLoading && (
@@ -50,7 +54,7 @@ const BusinessDetail = () => {
               dislike={comment.dislike}
               rating={comment.rating}
               createdAt={comment.createdAt}
-              userId={comment.user}
+              userId={comment.user._id.toString()}
               businessId={businessId}
             />
           ))}

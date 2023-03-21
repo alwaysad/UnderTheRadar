@@ -46,13 +46,13 @@ const UserSchema = new Schema(
     likedComments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Comments",
+        ref: "Comment",
       },
     ],
     comments: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Comments",
+        ref: "Comment",
       },
     ],
   },

@@ -1,28 +1,29 @@
 const Business = require("../models/Business");
 
+const GetAllBusiness = async (req, res) => {
+  const q = req.query;
 
-
-const GetAllBusiness=async(req,res)=>{
-
-  const q=req.query;
-
-  const filters={
-    ...(q.type&&{businessType:q.type}),
-  }
+  const filters = {
+    ...(q.type && { businessType: q.type }),
+  };
 
   try {
-    const business= await Business.find(filters||'');
+    const business = await Business.find(filters || "").populate({
+      path: "comments",
+      model: "Comment",
+    });
     res.status(200).json(business);
   } catch (error) {
-    res.status(500).json({message:error.message})
+    res.status(500).json({ message: error.message });
   }
-}
-
-
+};
 
 const GetBusiness = async (req, res) => {
   try {
-    const business = await Business.findById(req.params.id);
+    const business = await Business.findById(req.params.id).populate({
+      path: "comments",
+      model: "Comment",
+    });
     if (!business) {
       throw new Error("there is no business with given details");
     }
@@ -72,5 +73,5 @@ module.exports = {
   getBusiness: GetBusiness,
   editBusiness: EditBusiness,
   deleteBusiness: DeleteBusiness,
-  getAllBusiness:GetAllBusiness,
+  getAllBusiness: GetAllBusiness,
 };

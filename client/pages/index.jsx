@@ -6,9 +6,13 @@ import { Configuration, OpenAIApi } from "openai";
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
+import Head from "next/head";
 const HomePage = () => {
   return (
     <div>
+      <Head>
+        <title>Welcome to Under The Radar</title>
+      </Head>
       <Banner />
       <div className="flex justify-center items-center my-5 ">
         <p className="text-4xl font-bold ">Explore</p>

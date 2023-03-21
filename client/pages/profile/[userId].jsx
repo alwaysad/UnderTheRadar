@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Avatar } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
-
+import Head from "next/head";
 import Follower from "../../components/followers";
 import UserContext from "../../context/userContext";
 import LoopIcon from "@mui/icons-material/Loop";
@@ -40,7 +40,11 @@ const Profile = () => {
   }, [userId]);
 
   const followingHandler = () => {
-    if (userCtx.user.followers?.includes(authCtx.userId)) {
+    if (
+      userCtx.user.followers?.some(
+        (follower) => follower._id === authCtx.userId
+      )
+    ) {
       setIsFollowing(true);
     } else {
       setIsFollowing(false);
@@ -61,6 +65,11 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-teal-50 ">
+      <Head>
+        <title>
+          {userCtx.user.firstName} (@{userCtx.user.username})
+        </title>
+      </Head>
       {userCtx.isLoading && (
         <div className="">
           <LoopIcon className="animate-spin" />
