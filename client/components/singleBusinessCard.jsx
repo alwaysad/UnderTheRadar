@@ -37,42 +37,38 @@ const SingleBusiness = ({
     } else {
       setVisible(true);
     }
-  }, []);
+  }, [commentNumber]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Link href={`/businessDetails/${id}`}>
-        <div
-          className="rounded-lg border group  border-teal-800 shadow-lg w-72 outline-none overflow-hidden"
-          style={{ height: "360px" }}
-        >
-          <Image src={image} alt="business" width={600} height={600} />
-          <div className="flex  flex-col justify-start space-y-2 py-4 px-4">
-            <div className="flex  justify-start space-x-3">
-              <PlaceIcon />
-              <p> {city}</p>
-            </div>
-
-            <div className="flex space-x-3 justify-start">
-              <BusinessIcon />
-              <p> {name}</p>
-            </div>
-
-            <div className="flex justify-start w-60  group-hover:text-green-400 duration-200 font-medium">
-              <p> {description}</p>
-            </div>
-            {visible && (
-              <div className="flex">
-                <StarIcon color="secondary" />
-                <p className=" text-orange-400 ">
-                  {rating ? rating.toFixed(1) : 0}
-                </p>
-                <p className=" text-gray-400 ">({commentNumber})</p>
+      <div>
+        <Link href={`/businessDetails/${id}`}>
+          <div className="rounded-lg border group bg-white  border-teal-800 shadow-lg w-72 outline-none overflow-hidden">
+            <Image src={image} alt="business" width={600} height={600} />
+            <div className="flex  flex-col justify-start space-y-4 py-4 px-4">
+              <div className="flex  justify-start space-x-3">
+                <PlaceIcon />
+                <p> {city}</p>
               </div>
-            )}
+
+              <div className="flex space-x-3 justify-start">
+                <BusinessIcon />
+                <p> {name}</p>
+              </div>
+
+              {visible && (
+                <div className="flex space-x-3">
+                  <StarIcon color="secondary" />
+                  <p className=" text-orange-400 ">
+                    {rating ? rating.toFixed(1) : 0}
+                    <span className=" text-gray-400 ">({commentNumber})</span>
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
     </ThemeProvider>
   );
 };

@@ -3,6 +3,7 @@ import AuthContext from "../context/authContext";
 import BusinessContext from "../context/businessContext";
 import CommentContext from "../context/commentContext";
 import newRequest from "../utils/makerequest";
+import { useEffect } from "react";
 
 const EditModal = ({ businessName, businessId, onClose }) => {
   const [enteredText, setEnteredText] = useState("");
@@ -17,6 +18,19 @@ const EditModal = ({ businessName, businessId, onClose }) => {
   const handleRatingChange = (e) => {
     setEnteredRating(parseInt(e.target.value));
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const modal = document.querySelector(".bg-comment");
+      if (modal && !modal.contains(event.target)) {
+        onClose();
+      }
+    };
+    window.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      window.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -48,6 +62,8 @@ const EditModal = ({ businessName, businessId, onClose }) => {
               <input
                 className="px-2 py-2 border-black border-2 rounded-md outline-none"
                 type="number"
+                max={5}
+                min={0}
                 onChange={handleRatingChange}
                 placeholder="Your rating"
               ></input>
@@ -56,10 +72,15 @@ const EditModal = ({ businessName, businessId, onClose }) => {
                 type="submit"
               >
                 Submit
-                
               </button>
             </div>
           </form>
+          <button
+            onClick={onClose}
+            className="border rounded-lg py-2 border-black overflow-hidden bg-black text-white hover:text-green-400 duration-150"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>

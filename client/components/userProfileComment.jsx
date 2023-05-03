@@ -13,7 +13,7 @@ import AuthContext from "../context/authContext";
 import newRequest from "../utils/makerequest";
 import getFormatDate from "../utils/formatDate";
 import BusinessContext from "../context/businessContext";
-import LoopIcon from "@mui/icons-material/Loop";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 const UserProfileComment = ({ comment }) => {
   const [time, setTime] = useState("");
   const [isUser, setIsUser] = useState(false);
@@ -93,12 +93,13 @@ const UserProfileComment = ({ comment }) => {
     getFormattedDateDifference(comment.createdAt);
   }, [userVerification, comment.createdAt]);
 
-
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-2 justify-start mb-2">
         <span className="font-bold">
-          {`${comment.user.username}>>${comment.business.name}`}
+          {comment.user.username}
+          <KeyboardDoubleArrowRightIcon />
+          {comment.business.name}
         </span>
 
         <Avatar src={comment.user.img} alt={comment.user.username} />

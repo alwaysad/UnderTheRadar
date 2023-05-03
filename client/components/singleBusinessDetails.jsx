@@ -47,11 +47,11 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
   return (
     <ThemeProvider theme={theme}>
       <div className="flex flex-col space-y-4">
-        <h1 className="font-bold text-4xl text-center md:text-left">
+        <h1 className="font-bold text-4xl text-center md:text-left mb-4">
           {business.name}
         </h1>
 
-        <div className="font-light text-2xl max-w-2xl">
+        <div className="font-light text-xl max-w-2xl">
           {business.description}
         </div>
         {open && (
@@ -64,7 +64,7 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
           </Portal>
         )}
 
-        <div className="border border-b-1"></div>
+        <div className="border border-b-1 border-gray-400"></div>
         <div className="flex flex-col space-y-2 md:flex-row justify-between">
           <div className="flex flex-col space-y-1">
             <span className="font-light">Style</span>
@@ -90,7 +90,13 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
             style={{ transform: `translateX(-${curr * 100}%)` }}
           >
             {business.images.map((image) => (
-              <Image src={image} width={500} height={500} key={image} alt={image}  />
+              <Image
+                src={image}
+                width={500}
+                height={500}
+                key={image}
+                alt={image}
+              />
             ))}
           </div>
           <div className="flex absolute inset-0 items-center justify-between p-4">
@@ -112,6 +118,7 @@ const SingleBusinessDetail = ({ business, commentnumber }) => {
             <div className="flex items-center justify-center gap-2">
               {business.images.map((_, i) => (
                 <div
+                  key={i}
                   className={`transition-all w-2 h-2 bg-white rounded-full ${
                     curr === i ? "p-1.5" : "bg-opacity-50"
                   }`}

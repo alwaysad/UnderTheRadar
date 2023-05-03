@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { async } from "@firebase/util";
 import newRequest from "../utils/makerequest";
@@ -47,7 +47,6 @@ export const CommentContextProvider = (props) => {
       );
       setUserComments(response.data);
       setIsLoading(false);
-      
     } catch (error) {
       setError(error);
     }

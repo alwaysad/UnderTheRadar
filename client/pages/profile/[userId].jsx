@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { Avatar } from "@mui/material";
 import { useEffect, useState, useContext } from "react";
 import Head from "next/head";
@@ -13,7 +12,8 @@ import CommentContext from "../../context/commentContext";
 import UserProfileComment from "../../components/userProfileComment";
 import newRequest from "../../utils/makerequest";
 import AuthContext from "../../context/authContext";
-
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { useRouter } from "next/router";
 const Profile = () => {
   const router = useRouter();
   const { userId } = router.query;
@@ -39,32 +39,31 @@ const Profile = () => {
     commentCtx.getUserComments(userId);
   }, [userId]);
 
-  const followingHandler = () => {
-    if (
-      userCtx.user.followers?.some(
-        (follower) => follower._id === authCtx.userId
-      )
-    ) {
-      setIsFollowing(true);
-    } else {
-      setIsFollowing(false);
-    }
-  };
-
   useEffect(() => {
     if (authCtx.userId === userId) {
       setShowButton(false);
     } else {
       setShowButton(true);
     }
-  }, [userId]);
+  }, [userId, authCtx.userId]);
 
   useEffect(() => {
+    const followingHandler = () => {
+      if (
+        userCtx.user.followers?.some(
+          (follower) => follower._id === authCtx.userId
+        )
+      ) {
+        setIsFollowing(true);
+      } else {
+        setIsFollowing(false);
+      }
+    };
     followingHandler();
-  }, [userCtx.user.followers]);
+  }, [userCtx, authCtx.userId]);
 
   return (
-    <div className="min-h-screen bg-teal-50 ">
+    <div className="min-h-screen bg-gradient-to-t from-emerald-200 from-10% via-emerald-400 via-30% to-emerald-500 to-90%">
       <Head>
         <title>
           {userCtx.user.firstName} (@{userCtx.user.username})
@@ -76,26 +75,28 @@ const Profile = () => {
         </div>
       )}
       {!userCtx.isLoading && (
-        <div className=" mx-auto mt-10 flex  flex-col max-w-7xl gap-4 px-10 md:flex-row  ">
-          <div className=" bg-gray-200 h-4/5  flex flex-col items-center  max-w-2xl py-10 px-20 ">
+        <div className=" mx-auto pt-10  flex  flex-col max-w-7xl gap-4 px-10 md:flex-row  ">
+          <div className=" bg-gray-200 h-4/5  flex flex-col space-y-2 items-center  max-w-2xl py-10 px-20 rounded-lg ">
             <Avatar src={userCtx.user.img} sx={{ width: 200, height: 200 }} />
             <div className="flex space-x-1 md:space-x-1">
               <span className="text-2xl">{userCtx.user.firstName}</span>
               <span className="text-2xl">{userCtx.user.lastName}</span>
             </div>
             <p className="font-medium">@{userCtx.user.username}</p>
-            <div className="flex space-x-1 md:space-x-1">
-              <CakeIcon />
-              <p>
-                Birth Date: {new Date(userCtx.user.birthDate).getDate()}{" "}
-                {new Date(userCtx.user.birthDate).toLocaleString("default", {
-                  month: "long",
-                })}
-              </p>
-            </div>
-            <div className="flex space-x-1 md:space-x-1">
-              <EmailIcon />
-              <p>{userCtx.user.email}</p>
+            <div>
+              <div className="flex space-x-1 md:space-x-1">
+                <CakeIcon />
+                <p>
+                  Birth Date: {new Date(userCtx.user.birthDate).getDate()}{" "}
+                  {new Date(userCtx.user.birthDate).toLocaleString("default", {
+                    month: "long",
+                  })}
+                </p>
+              </div>
+              <div className="flex space-x-1 md:space-x-1">
+                <EmailIcon />
+                <p>{userCtx.user.email}</p>
+              </div>
             </div>
             {showButton && (
               <div className="flex flex-col space-y-2 md:flex-row space-x-2 md:space-y-0">
@@ -124,16 +125,18 @@ const Profile = () => {
               </div>
             )}
             <div>
-              <span>Followers:</span>
-              <div className="flex ">
-                {userCtx.user.followers &&
-                  userCtx.user.followers.map((follower) => (
-                    <Follower key={follower} id={follower} />
-                  ))}
+              <div className="flex flex-col items-center justify-center">
+                <span className="font-bold">Followers</span>
+                <div className="flex ">
+                  {userCtx.user.followers &&
+                    userCtx.user.followers.map((follower) => (
+                      <Follower key={follower} id={follower} />
+                    ))}
+                </div>
               </div>
             </div>
-            <div>
-              <span>Followings:</span>
+            <div className="flex flex-col items-center justify-center">
+              <span className="font-bold">Followings</span>
               <div className="flex ">
                 {userCtx.user.followings &&
                   userCtx.user.followings.map((followings) => (
@@ -142,9 +145,9 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-200 items-center justify-center max-w-4xl w-full pt-10 px-10 ">
-            <span className="font-bold text-3xl mb-10 flex justify-center">
-              Comment section
+          <div className="bg-gray-200 rounded-lg items-center justify-center max-w-4xl w-full pt-10 px-10 ">
+            <span className="font-bold text-4xl mb-10 flex justify-center">
+              COMMENTS
             </span>
             {commentCtx.isLoading && <LoopIcon className="animate-spin" />}
             {!commentCtx.isLoading &&

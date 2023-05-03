@@ -24,12 +24,12 @@ const Navbar = () => {
 
   return (
     <div className="bg-green-400 sticky top-0 z-50">
-      <div className="flex justify-between max-w-6xl  mx-auto py-3 items-center px-10 md:px-20">
-        <Link href='/'>
-        <RadarIcon fontSize="large" />
+      <div className="flex justify-between py-3 items-center px-10 md:px-20">
+        <Link href="/">
+          <RadarIcon fontSize="large" />
         </Link>
         <div className="hidden md:block">
-          <ul className="flex space-x-4 items-center text-2xl">
+          <ul className="flex space-x-4 items-center text-lg">
             <li>
               <Link href="/">Home</Link>
             </li>
