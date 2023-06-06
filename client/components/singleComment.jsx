@@ -166,7 +166,8 @@ const SingleComment = ({
               )}
             </div>
           </div>
-          {text}
+          <p> {text}</p>
+
           {open && (
             <Portal>
               <EditModal
