@@ -1,29 +1,30 @@
-import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import SingleBusinessDetail from "../../components/singleBusinessDetails";
 import BusinessContext from "../../context/businessContext";
-import LoopIcon from "@mui/icons-material/Loop";
 import CommentContext from "../../context/commentContext";
 import SingleComment from "../../components/singleComment";
 import Head from "next/head";
+import { useQuery } from "@tanstack/react-query";
 
-const BusinessDetail = () => {
-  const router = useRouter();
-  const { businessId } = router.query;
+const BusinessDetail = (props) => {
   const businessCtx = useContext(BusinessContext);
   const commentCtx = useContext(CommentContext);
 
-  const fetchData = async () => {
-    await Promise.all([
-      commentCtx.getComments(businessId),
-      businessCtx.businessHandler(businessId),
-    ]);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [businessId]);
+  const {
+    data: business,
+    isLoading: businessIsLoading,
+    isError: businessIsError,
+    error: businessError,
+  } = useQuery({
+    queryKey: ["businesses", props.businessId],
+    queryFn: () => businessCtx.businessHandler(props.businessId),
+  });
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["comments", props.businessId],
+    enabled: businessCtx?.business?.id,
+    queryFn: () => commentCtx.getComments(props.businessId),
+  });
 
   return (
     <div className="flex min-h-screen justify-center mt-10">
@@ -76,12 +77,22 @@ const BusinessDetail = () => {
               rating={comment.rating}
               createdAt={comment.createdAt}
               userId={comment.user._id.toString()}
-              businessId={businessId}
+              businessId={props.businessId}
             />
           ))}
       </div>
     </div>
   );
 };
+
+export async function getServerSideProps(context) {
+  const { businessId } = context.query;
+
+  return {
+    props: {
+      businessId: businessId,
+    },
+  };
+}
 
 export default BusinessDetail;

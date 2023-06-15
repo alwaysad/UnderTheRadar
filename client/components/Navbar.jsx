@@ -23,7 +23,7 @@ const Navbar = () => {
   }, [authCtx.userId]);
 
   return (
-    <div className="bg-green-400 sticky top-0 z-50">
+    <div className="bg-[#8395a6] sticky top-0 z-50">
       <div className="flex justify-between py-3 items-center px-10 md:px-20">
         <Link href="/">
           <RadarIcon fontSize="large" />

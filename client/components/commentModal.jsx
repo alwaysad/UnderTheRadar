@@ -4,8 +4,11 @@ import BusinessContext from "../context/businessContext";
 import CommentContext from "../context/commentContext";
 import newRequest from "../utils/makerequest";
 import { useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 const EditModal = ({ businessName, businessId, onClose }) => {
+  const queryClient = useQueryClient();
   const [enteredText, setEnteredText] = useState("");
   const [enteredRating, setEnteredRating] = useState(0);
   const authCtx = useContext(AuthContext);
@@ -42,9 +45,17 @@ const EditModal = ({ businessName, businessId, onClose }) => {
       userId: authCtx.userId,
       businessId: businessId,
     });
-    businessCtx.businessHandler(businessId);
+
     commmentCtx.getComments(businessId);
   };
+
+  const { data, isError, isIdle, mutate } = useMutation({
+    mutationFn: () => submitHandler,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["businesses", businessId]);
+      queryClient.invalidateQueries(["comments", businessId]);
+    },
+  });
 
   return (
     <div className="fixed top-0 left-0 h-screen w-screen bg-gray-800 bg-opacity-50 flex items-center justify-center">

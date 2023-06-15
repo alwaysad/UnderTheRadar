@@ -12,9 +12,9 @@ import CommentContext from "../../context/commentContext";
 import UserProfileComment from "../../components/userProfileComment";
 import newRequest from "../../utils/makerequest";
 import AuthContext from "../../context/authContext";
-import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { useRouter } from "next/router";
-const Profile = () => {
+import { useQuery } from "@tanstack/react-query";
+const Profile = (props) => {
   const router = useRouter();
   const { userId } = router.query;
 
@@ -24,6 +24,25 @@ const Profile = () => {
   const userCtx = useContext(UserContext);
   const authCtx = useContext(AuthContext);
   const commentCtx = useContext(CommentContext);
+
+  const userShowButton = () => {
+    if (authCtx.userId === userId) {
+      setShowButton(false);
+    } else {
+      setShowButton(true);
+    }
+  };
+  const userFollowButton = () => {
+    if (
+      userCtx.user.followers?.some(
+        (follower) => follower._id === authCtx.userId
+      )
+    ) {
+      setIsFollowing(true);
+    } else {
+      setIsFollowing(false);
+    }
+  };
 
   const followHandler = async () => {
     await newRequest.put(`user/follow/${userId}`);
@@ -35,20 +54,15 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    userCtx.userHandler(userId);
-    commentCtx.getUserComments(userId);
-  }, [userId]);
-
-  useEffect(() => {
-    if (authCtx.userId === userId) {
-      setShowButton(false);
-    } else {
-      setShowButton(true);
-    }
+    //bu ksıımların da contexte taşınması gerekiyor
+    userShowButton();
+    userFollowButton();
   }, [userId, authCtx.userId]);
 
-  useEffect(() => {
-    const followingHandler = () => {
+  const {} = useQuery({
+    queryKey: ["profileFollowing", props.userId],
+    queryFn: () => {
+      console.log(userCtx.user.followers);
       if (
         userCtx.user.followers?.some(
           (follower) => follower._id === authCtx.userId
@@ -58,9 +72,25 @@ const Profile = () => {
       } else {
         setIsFollowing(false);
       }
-    };
-    followingHandler();
-  }, [userCtx, authCtx.userId]);
+    },
+  });
+  const {} = useQuery({
+    queryKey: ["profileFollow", props.userId],
+    queryFn: () => followHandler,
+  });
+  const {} = useQuery({
+    queryKey: ["profileUnfollow", props.userId],
+    queryFn: () => unfollowHandler,
+  });
+
+  const {} = useQuery({
+    queryKey: ["profile", props.userId],
+    queryFn: () => userCtx.userHandler(userId),
+  });
+  const {} = useQuery({
+    queryKey: ["profilecomments", props.userId],
+    queryFn: () => commentCtx.getUserComments(userId),
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-t from-emerald-200 from-10% via-emerald-400 via-30% to-emerald-500 to-90%">
@@ -87,7 +117,7 @@ const Profile = () => {
               <div className="flex space-x-1 md:space-x-1">
                 <CakeIcon />
                 <p>
-                  Birth Date: {new Date(userCtx.user.birthDate).getDate()}{" "}
+                  {new Date(userCtx.user.birthDate).getDate()}{" "}
                   {new Date(userCtx.user.birthDate).toLocaleString("default", {
                     month: "long",
                   })}
@@ -162,3 +192,12 @@ const Profile = () => {
 };
 
 export default Profile;
+export async function getServerSideProps(context) {
+  const { userId } = context.query;
+
+  return {
+    props: {
+      userId: userId,
+    },
+  };
+}
